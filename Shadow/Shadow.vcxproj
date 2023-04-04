@@ -19,7 +19,54 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Camera\Camera.cpp" />
+    <ClCompile Include="Component\BoxCollider2D.cpp" />
+    <ClCompile Include="Collision\CollisionHandler.cpp" />
+    <ClCompile Include="Engine\Engine.cpp" />
+    <ClCompile Include="GameObject\GameObject.cpp" />
+    <ClCompile Include="GameObject\GameObjectManager.cpp" />
+    <ClCompile Include="Input\InputManager.cpp" />
+    <ClCompile Include="Logger\Log.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Component\SpriteRenderer.cpp" />
+    <ClCompile Include="Component\RigidBody2D.cpp" />
+    <ClCompile Include="Camera\OrthographicCamera.cpp" />
+    <ClCompile Include="Scene\Scene.cpp" />
+    <ClCompile Include="Scene\SceneManager.cpp" />
+    <ClCompile Include="src\sdpch.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="Graphics\TextureManager.cpp" />
+    <ClCompile Include="Time\Time.cpp" />
+    <ClCompile Include="Window\WindowManager.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Camera\Camera.h" />
+    <ClInclude Include="Graphics\Color.h" />
+    <ClInclude Include="Component\BoxCollider2D.h" />
+    <ClInclude Include="Collision\CollisionHandler.h" />
+    <ClInclude Include="Component\IComponent.h" />
+    <ClInclude Include="Engine\Engine.h" />
+    <ClInclude Include="GameObject\GameObjectManager.h" />
+    <ClInclude Include="GameObject\GameObject.h" />
+    <ClInclude Include="Input\InputManager.h" />
+    <ClInclude Include="IScene.h" />
+    <ClInclude Include="Logger\Log.h" />
+    <ClInclude Include="Component\SpriteRenderer.h" />
+    <ClInclude Include="Component\RigidBody2D.h" />
+    <ClInclude Include="Camera\OrthographicCamera.h" />
+    <ClInclude Include="Scene\Scene.h" />
+    <ClInclude Include="Scene\SceneManager.h" />
+    <ClInclude Include="src\sdpch.h" />
+    <ClInclude Include="Graphics\TextureManager.h" />
+    <ClInclude Include="Physics\Transform.h" />
+    <ClInclude Include="Time\Time.h" />
+    <ClInclude Include="Window\WindowManager.h" />
+    <ClInclude Include="Window\Window.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Ideas.txt" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
@@ -73,6 +120,14 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <IncludePath>$(SolutionDir)/deps/;$(SolutionDir)/deps/include/;$(SolutionDir)/Shadow/;$(SolutionDir)/Shadow/src;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)/deps/lib/;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <IncludePath>$(SolutionDir)/deps/;$(SolutionDir)/deps/include/;$(SolutionDir)/Shadow/;$(SolutionDir)/Shadow/src;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)/deps/lib/;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -107,10 +162,16 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>sdpch.h</PrecompiledHeaderFile>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>
+      </AdditionalLibraryDirectories>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -121,12 +182,18 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>sdpch.h</PrecompiledHeaderFile>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>
+      </AdditionalLibraryDirectories>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
