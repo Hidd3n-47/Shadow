@@ -36,10 +36,12 @@ private:
 	bool m_running = true;
 
 	void Update();
+	void PhysicsUpdate();
 	void Render();
 
 	Scene* m_pMainScene = nullptr;
 	GameObject* gm = nullptr;
+	GameObject* gm2 = nullptr;
 	GameObject* col = nullptr;
 	//Camera m_camera;
 };

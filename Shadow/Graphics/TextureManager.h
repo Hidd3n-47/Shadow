@@ -31,8 +31,8 @@ public:
 
 	uint16_t Load(std::string filePath, SDL_Renderer* pRenderer, int width = TILE_WIDTH, int height = TILE_WIDTH);
 
-	void RenderSingle(Camera* pCamera, SDL_Renderer* pRenderer, uint16_t id, float worldX, float worldY, int sheetX = 0, int sheetY = 0, SDL_RendererFlip flip = SDL_FLIP_NONE);
-	void DebugRender(Camera* pCamera, SDL_Renderer* pRenderer, DebugRenderType type, glm::vec3 worldPos, glm::vec2 dimensions = {TILE_WIDTH, TILE_WIDTH}, Color color = Color(Red));
+	void RenderSingle(Camera* pCamera, SDL_Renderer* pRenderer, uint16_t id, glm::vec2 world, glm::vec2 scale, int sheetX = 0, int sheetY = 0, SDL_RendererFlip flip = SDL_FLIP_NONE);
+	void DebugRender(Camera* pCamera, SDL_Renderer* pRenderer, DebugRenderType type, glm::vec3 worldPos, glm::vec2 halfExtents = {TILE_WIDTH * 0.5f, TILE_WIDTH * 0.5f }, Color color = Color(Red));
 
 	void RemoveTexture(uint16_t id);
 	void RemoveAllTextures();

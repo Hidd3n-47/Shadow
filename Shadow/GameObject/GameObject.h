@@ -11,7 +11,7 @@ SHADOW_NAMESPACE_BEGIN
 /***
 =========================================================================================
 GAME_OBJECT:
-	Game Object interface.
+	A game object is any object that is placed in a Scene and can have components added.
 =========================================================================================
 */
 class GameObject
@@ -44,6 +44,7 @@ private:
 	std::list<IComponent*> m_components;
 
 	void Update();
+	void PhysicsUpdate();
 	void Render();
 };
 

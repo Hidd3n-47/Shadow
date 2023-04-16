@@ -11,6 +11,8 @@
 #include "Component/SpriteRenderer.h"
 #include "Component/RigidBody2D.h"
 #include "Component/BoxCollider2D.h"
+#include "Component/CircleCollider2D.h"
+#include "Component/Physics2D.h"
 #include "Time/Time.h"
 
 SHADOW_NAMESPACE_BEGIN
@@ -41,18 +43,25 @@ void Engine::InitEngine()
 	gm = m_pMainScene->CreateEmptyGameObject("test");
 	pMainCamera->SetTargetPosition(gm->GetTransform()->position);
 	col = m_pMainScene->CreateEmptyGameObject("Collider");
+	gm2 = m_pMainScene->CreateEmptyGameObject("123");
 
 	SpriteRenderer* sr = new SpriteRenderer(gm, "Assets/circle.png");
 	gm->AddComponent(sr);
-	RigidBody2D* rb = new RigidBody2D(gm, true);
+	RigidBody2D* rb = new RigidBody2D(gm, RigidBody2D::BodyType::Kinematic);
 	gm->AddComponent(rb);
-	BoxCollider2D* b = new BoxCollider2D(gm, { }, { 32.0f, 32.0f});
+	//BoxCollider2D* b = new BoxCollider2D(gm, { 16.0f, 16.0f}, true);
+	CircleCollider2D* b = new CircleCollider2D(gm, 16.0f);
 	gm->AddComponent(b);
 
+	gm2->GetTransform()->position = glm::vec3(50.0f, 0.0f, 0.0f);
+	gm2->GetTransform()->scale = glm::vec3(2.0f, 2.0f, 0.0f);
+	gm2->AddComponent(new SpriteRenderer(gm2, "Assets/circle.png"));
+	gm2->AddComponent(new RigidBody2D(gm2, RigidBody2D::BodyType::Static));
+	gm2->AddComponent(new CircleCollider2D(gm2, 32.0f));
 
-	col->GetTransform()->position = glm::vec3(0.0f, 500.0f, 0.0f);
-	BoxCollider2D* bc = new BoxCollider2D(col, {0.0f, 0.0f }, { 200.0f, 50.0f });
-	col->AddComponent(bc);
+	col->GetTransform()->position = glm::vec3(0.0f, 100.0f, 0.0f);
+	//CircleCollider2D* bc = new CircleCollider2D(col, 32.0f);
+	col->AddComponent(new BoxCollider2D(col, { 100.0f, 25.0f }));
 }
 
 void Engine::Run()
@@ -61,6 +70,7 @@ void Engine::Run()
 	{
 		InputManager::Instance()->Listen();
 		Update();
+		PhysicsUpdate();
 		Render();
 
 		Time::Instance()->Tick();
@@ -90,7 +100,24 @@ void Engine::Update()
 {
 	SceneManager::Instance()->UpdateActiveScene();
 
-	CollisionHandler::Instance()->Update();
+	// Input;
+	RigidBody2D* rb = (RigidBody2D*)(gm->GetComponent(ComponentType::RigidBody2D));
+
+	if (InputManager::Instance()->IsKeyDown(KEYCODE_w))
+		rb->Translate(glm::vec3(0.0f, -30,0.0f));
+	if (InputManager::Instance()->IsKeyDown(KEYCODE_s))
+		rb->Translate(glm::vec3(0.0f, 30.0f, 0.0f));
+	if (InputManager::Instance()->IsKeyDown(KEYCODE_a))
+		rb->Translate(glm::vec3(-30.0f, 0.0f, 0.0f));
+	if (InputManager::Instance()->IsKeyDown(KEYCODE_d))
+		rb->Translate(glm::vec3(30.0f, 0.0f, 0.0f));
+
+}
+
+void Engine::PhysicsUpdate()
+{
+	SceneManager::Instance()->PhysicsUpdateActiveScene();
+
 }
 
 void Engine::Render()
@@ -99,6 +126,7 @@ void Engine::Render()
 	SDL_SetRenderDrawColor(pRen,BG_COLOR.r, BG_COLOR.g, BG_COLOR.b, BG_COLOR.a);
 
 	SDL_RenderClear(pRen);
+	CollisionHandler::Instance()->Update();
 
 	SceneManager::Instance()->RenderActiveScene();
 

@@ -5,38 +5,40 @@
 
 SHADOW_NAMESPACE_BEGIN
 
-RigidBody2D::RigidBody2D(GameObject* pOwner, bool affectedByGravity) : 
-	m_pOwner(pOwner), 
-	m_netForce(glm::vec3(0.0f)),
-	m_acceleration(glm::vec3(0.0f)),
-	m_velocity(glm::vec3(0.0f)),
-	m_affectedByGravity(affectedByGravity)
+RigidBody2D::RigidBody2D(GameObject* pOwner, BodyType bodyType) : 
+	m_pOwner(pOwner),
+	m_type(bodyType)
 {
 	SetComponentType(ComponentType::RigidBody2D);
 }
 
 void RigidBody2D::OnComponentAdd()
 {
-	if (m_affectedByGravity)
-		m_netForce = glm::vec3(0, 9.8f, 0.0f);
-
 	DLOG("Rigid Body 2D added to '" + m_pOwner->GetName() + "'.");
-
 }
 
-void RigidBody2D::Update()
+void RigidBody2D::PhysicsUpdate()
 {
 	float dt = Time::Instance()->GetDeltaTime();
+	if (m_type == BodyType::Dynamic)
+		Translate(glm::vec3(0.0f, 9.8f * 2, 0.0f));
 
-	m_acceleration = m_netForce / m_mass;
+	/*m_acceleration = m_netForce / m_mass;
 
 	m_velocity += m_acceleration * dt;
-	m_pOwner->GetTransform()->position += m_velocity * dt;
+	m_pOwner->GetTransform()->position += m_velocity * dt;*/
 }
 
 void RigidBody2D::OnComponentRemove()
 {
 	DLOG("Rigid Body 2D removed from '" + m_pOwner->GetName() + "'.");
+}
+
+void RigidBody2D::Translate(glm::vec3 direction)
+{
+	float dt = Time::Instance()->GetDeltaTime();
+
+	m_pOwner->GetTransform()->position += direction * 1.0f / m_mass * dt;
 }
 
 SHADOW_NAMESPACE_END

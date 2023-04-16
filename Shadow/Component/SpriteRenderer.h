@@ -14,6 +14,7 @@ public:
 
 	virtual void OnComponentAdd() override;
 	virtual void Update() override;
+	virtual void PhysicsUpdate() override { }
 	virtual void Render(glm::vec3 worldPosition) override;
 	virtual void OnComponentRemove() override;
 private:

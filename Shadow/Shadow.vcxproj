@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Camera\Camera.cpp" />
+    <ClCompile Include="Component\CircleCollider2D.cpp" />
     <ClCompile Include="Component\BoxCollider2D.cpp" />
     <ClCompile Include="Collision\CollisionHandler.cpp" />
     <ClCompile Include="Engine\Engine.cpp" />
@@ -31,6 +32,7 @@
     <ClCompile Include="Component\SpriteRenderer.cpp" />
     <ClCompile Include="Component\RigidBody2D.cpp" />
     <ClCompile Include="Camera\OrthographicCamera.cpp" />
+    <ClCompile Include="Component\Physics2D.cpp" />
     <ClCompile Include="Scene\Scene.cpp" />
     <ClCompile Include="Scene\SceneManager.cpp" />
     <ClCompile Include="src\sdpch.cpp">
@@ -38,11 +40,13 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Graphics\TextureManager.cpp" />
+    <ClCompile Include="Texture.cpp" />
     <ClCompile Include="Time\Time.cpp" />
     <ClCompile Include="Window\WindowManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera\Camera.h" />
+    <ClInclude Include="Component\CircleCollider2D.h" />
     <ClInclude Include="Graphics\Color.h" />
     <ClInclude Include="Component\BoxCollider2D.h" />
     <ClInclude Include="Collision\CollisionHandler.h" />
@@ -56,11 +60,13 @@
     <ClInclude Include="Component\SpriteRenderer.h" />
     <ClInclude Include="Component\RigidBody2D.h" />
     <ClInclude Include="Camera\OrthographicCamera.h" />
+    <ClInclude Include="Component\Physics2D.h" />
     <ClInclude Include="Scene\Scene.h" />
     <ClInclude Include="Scene\SceneManager.h" />
     <ClInclude Include="src\sdpch.h" />
     <ClInclude Include="Graphics\TextureManager.h" />
     <ClInclude Include="Physics\Transform.h" />
+    <ClInclude Include="Texture.h" />
     <ClInclude Include="Time\Time.h" />
     <ClInclude Include="Window\WindowManager.h" />
     <ClInclude Include="Window\Window.h" />
@@ -171,7 +177,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>
       </AdditionalLibraryDirectories>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;Box2D.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -193,7 +199,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>
       </AdditionalLibraryDirectories>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;Box2D.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

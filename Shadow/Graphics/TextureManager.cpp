@@ -41,19 +41,19 @@ uint16_t TextureManager::Load(std::string filePath, SDL_Renderer* pRenderer, int
 	return m_id++;
 }
 
-void TextureManager::RenderSingle(Camera* pCamera, SDL_Renderer* pRenderer, uint16_t id, float worldX, float worldY, int sheetX, int sheetY, SDL_RendererFlip flip)
+void TextureManager::RenderSingle(Camera* pCamera, SDL_Renderer* pRenderer, uint16_t id, glm::vec2 world, glm::vec2 scale, int sheetX, int sheetY, SDL_RendererFlip flip)
 {
-	glm::vec3 camPosition = pCamera->GetPostion();
+	glm::vec3 camPosition = pCamera->GetPosition();
 	float width, height;
 	pCamera->GetWidthAndHeight(width, height);
 
 	// This needs to be fixed later.
 	//  Need to accomidate the length of the actual object. THis needs to be implemented when texure class. TODO
-	if (worldX < camPosition.x - width || worldX > camPosition.x + width || worldY > camPosition.y + height || worldY < camPosition.y - height)
+	if (world.x < camPosition.x - width || world.x > camPosition.x + width || world.y > camPosition.y + height || world.y < camPosition.y - height)
 		return;
 
 	SDL_Rect srcRect = { sheetX, sheetY, TILE_WIDTH, TILE_WIDTH };
-	SDL_Rect destRect = { floor(worldX - camPosition.x + width * 0.5f), floor(worldY - camPosition.y + height * 0.5f), TILE_WIDTH, TILE_WIDTH };
+	SDL_Rect destRect = { floor(world.x - camPosition.x + width * 0.5f), floor(world.y - camPosition.y + height * 0.5f), TILE_WIDTH * scale.x, TILE_WIDTH * scale.y };
 
 	int err = SDL_RenderCopyEx(pRenderer, m_textureMap[id], &srcRect, &destRect, 0, nullptr, flip);
 
@@ -62,22 +62,21 @@ void TextureManager::RenderSingle(Camera* pCamera, SDL_Renderer* pRenderer, uint
 			".\nSDL Error : " + (std::string)SDL_GetError(), ERR_CODE::FAILED_TO_RENDER_TEXTURE);
 }
 
-void TextureManager::DebugRender(Camera* pCamera, SDL_Renderer* pRenderer, DebugRenderType type, glm::vec3 worldPos, glm::vec2 dimensions, Color color)
+void TextureManager::DebugRender(Camera* pCamera, SDL_Renderer* pRenderer, DebugRenderType type, glm::vec3 worldPos, glm::vec2 halfExtents, Color color)
 {
-	glm::vec3 camPosition = pCamera->GetPostion();
+	glm::vec3 camPosition = pCamera->GetPosition();
 	float width, height;
 	pCamera->GetWidthAndHeight(width, height);
 
 	if (worldPos.x < camPosition.x - width || worldPos.x > camPosition.x + width || worldPos.y > camPosition.y + height || worldPos.y < camPosition.y - height)
 		return;
 
-	SDL_Rect destRect = { floor(worldPos.x - camPosition.x + width * 0.5f), floor(worldPos.y - camPosition.y + height * 0.5f), dimensions.x, dimensions.y };
+	SDL_Rect destRect = { floor(worldPos.x - camPosition.x + width * 0.5f), floor(worldPos.y - camPosition.y + height * 0.5f), halfExtents.x * 2.0f, halfExtents.y * 2.0f };
 
-
+	SDL_SetRenderDrawColor(pRenderer, color.r, color.g, color.b, color.a);
 	switch (type)
 	{
 	case Square:
-		SDL_SetRenderDrawColor(pRenderer, color.r, color.g, color.b, color.a);
 		SDL_RenderDrawRect(pRenderer, &destRect);
 		break;
 	}

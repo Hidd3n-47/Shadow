@@ -8,28 +8,39 @@ SHADOW_NAMESPACE_BEGIN
 class RigidBody2D : public IComponent
 {
 public:
-	RigidBody2D(GameObject* pOwner, bool affectedByGravity = false);
-	~RigidBody2D() override { }
+	enum class BodyType { Static = 0, Dynamic, Kinematic };
+
+public:
+	RigidBody2D(GameObject* pOwner, BodyType bodyType);
+	~RigidBody2D() override {  }
 
 	virtual void OnComponentAdd() override;
 
-	virtual void Update() override;
+	virtual void Update() override { }
+	virtual void PhysicsUpdate() override;
 
 	virtual void Render(glm::vec3 worldPosition) override { } // ADDITION could use this to render the directions in debug mode
 
 	virtual void OnComponentRemove() override;
 
-	inline void AddForce(glm::vec3 force) { m_netForce += force; }
-	inline void ResetAll() { m_netForce = { 0.0f, 0.0f, 0.0f }; m_velocity = { 0.0f, 0.0f, 0.0f }; }
+	void Translate(glm::vec3 direction);
+
+	/*inline void AddForce(glm::vec3 force) { m_netForce += force; }
+	inline void ResetAll() { m_netForce = { 0.0f, 0.0f, 0.0f }; m_velocity = { 0.0f, 0.0f, 0.0f }; }*/
+
+	// Accessors.
+	inline BodyType GetBodyType() { return m_type; }
+	/*inline glm::vec3 GetNetForce() { return m_netForce; }*/
+	//inline bool GetFixedRotation() { return m_fixedRotation; }
 private:
 	GameObject* m_pOwner = nullptr;
+	BodyType m_type = BodyType::Static;
 
-	glm::vec3 m_netForce;
-	glm::vec3 m_acceleration;
-	glm::vec3 m_velocity;
+	/*glm::vec3 m_netForce = glm::vec3(0.0f);
+	glm::vec3 m_acceleration = glm::vec3(0.0f);
+	glm::vec3 m_velocity = glm::vec3(0.0f);*/
 
-	bool m_affectedByGravity = false;
-	float m_mass = 0.1f;
+	float m_mass = 0.50f;
 };
 
 SHADOW_NAMESPACE_END

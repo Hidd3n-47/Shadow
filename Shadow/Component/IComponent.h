@@ -17,7 +17,8 @@ enum class ComponentType
 	SpriteRenderer,
 	BoxCollider2D,
 	CircleCollider2D,
-	RigidBody2D
+	RigidBody2D,
+	Physics2D
 };
 
 /***
@@ -39,6 +40,10 @@ public:
 		\brief Method called on each update frame.
 	*/
 	virtual void Update() = 0;
+	/*
+		\brief Method called on each update the physics.
+	*/
+	virtual void PhysicsUpdate() = 0;
 	/*
 		\brief Method called to Render something to the screen.
 	*/

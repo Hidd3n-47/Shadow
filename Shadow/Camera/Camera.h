@@ -13,7 +13,7 @@ public:
 	void Update();
 
 	// Accessors.
-	inline glm::vec3 GetPostion() const { return m_position; }
+	inline glm::vec3 GetPosition() const { return m_position; }
 	inline float GetWidth() const { return m_width; }
 	inline float GetHeight() const { return m_height; }
 	inline void GetWidthAndHeight(float& width, float& height) const { width = m_width; height = m_height; }

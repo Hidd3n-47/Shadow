@@ -11,21 +11,40 @@ public:
 
 	void Update();
 
-	inline void AddToDynamic(GameObject* go) { m_dynamicObjects.push_back(go); }
-	inline void AddToStatic(GameObject* go) { m_staticObjects.push_back(go); }
-	inline void AddToQueue(GameObject* go) { m_dynamicQueue.push_back(go); }
+	inline void AddBoxToDynamicQueue(GameObject* go) { m_dynamicBox2dQueue.push_back(go); }
+	inline void AddBoxToDynamic(GameObject* go) { m_dynamicBox2d.push_back(go); }
+	inline void AddBoxToStatic(GameObject* go) { m_staticBox2d.push_back(go); }
+	inline void AddCircleToDynamicQueue(GameObject* go) { m_dynamicCircle2dQueue.push_back(go); }
+	inline void AddCircleToDynamic(GameObject* go) { m_dynamicCircle2d.push_back(go); }
+	inline void AddCircleToStatic(GameObject* go) { m_staticCircle2d.push_back(go); }
+
+	void RemoveFromBoxDynamic(GameObject* go);
+	void RemoveFromBoxStatic(GameObject* go);
+	void RemoveFromCircleDynamic(GameObject* go);
+	void RemoveFromCircleStatic(GameObject* go);
 private:
 	CollisionHandler() { }
 	~CollisionHandler() { delete m_pInstance; }
 
 	static CollisionHandler* m_pInstance;
 
-	std::vector<GameObject*> m_dynamicObjects;
-	std::vector<GameObject*> m_staticObjects;
+	std::vector<GameObject*> m_dynamicBox2dQueue;
+	std::vector<GameObject*> m_dynamicBox2d;
+	std::vector<GameObject*> m_staticBox2d;
+	std::vector<GameObject*> m_dynamicCircle2dQueue;
+	std::vector<GameObject*> m_dynamicCircle2d;
+	std::vector<GameObject*> m_staticCircle2d;
 
-	std::vector<GameObject*> m_dynamicQueue;
+	void CheckCirclesInQueue();
+	void CheckBoxesInQueue();
+	void CheckDynamicBoxCircleInQueue();
 
-	void CheckCollisionAgainstStatic(GameObject* go);
+	void CheckCollisionBetweenBoxes(GameObject* b1, GameObject* b2, bool pushBoth = true);
+	void CheckCollisionBetweenCircles(GameObject* c1, GameObject* c2, bool pushBoth = true);
+	void CheckCollisionBetweenBoxCircle(GameObject* box, GameObject* circle, bool pushBoth = true, bool pushCircle = false);
+
+	float SignOfFloat(float f);
+	bool BetweenAngleInclusive(float amin, float angle, float amax);
 };
 
 SHADOW_NAMESPACE_END

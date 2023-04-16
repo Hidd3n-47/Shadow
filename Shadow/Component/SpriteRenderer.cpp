@@ -23,7 +23,7 @@ void SpriteRenderer::OnComponentAdd()
 {
 	m_textureId = TextureManager::Instance()->Load(m_filePath, WindowManager::Instance()->GetMainWindow()->GetRenderer());
 
-	DLOG("Sprite Renderer added to '" + m_pOwner->GetName() + "'.");
+	DLOG("Sprite Renderer added to '" + m_pOwner->GetName() + "'.")
 }
 
 void SpriteRenderer::Update()
@@ -39,8 +39,8 @@ void SpriteRenderer::Render(glm::vec3 worldPosition)
 #ifdef RENDER_DEBUG
 	TextureManager::Instance()->DebugRender(pCamera, pRenderer, Square, glm::vec3(worldPosition.x, worldPosition.y, 0.0f));
 #endif
-
-	TextureManager::Instance()->RenderSingle(pCamera, pRenderer, m_textureId, worldPosition.x, worldPosition.y);
+	glm::vec3 scale = m_pOwner->GetTransform()->scale;
+	TextureManager::Instance()->RenderSingle(pCamera, pRenderer, m_textureId, glm::vec2(worldPosition.x, worldPosition.y), glm::vec2(scale.x, scale.y));
 }
 
 void SpriteRenderer::OnComponentRemove()

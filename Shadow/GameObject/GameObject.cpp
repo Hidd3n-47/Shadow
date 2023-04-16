@@ -84,6 +84,12 @@ void GameObject::Update()
 		comp->Update();
 }
 
+void GameObject::PhysicsUpdate()
+{
+	for (IComponent* comp : m_components)
+		comp->PhysicsUpdate();
+}
+
 void GameObject::Render()
 {
 	// ADDITION: Could add debugging render to this.

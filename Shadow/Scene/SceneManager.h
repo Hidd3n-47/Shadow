@@ -14,7 +14,11 @@ public:
 	void DestroyAllScenes();
 
 	inline void UpdateActiveScene() { m_scenes[m_activeSceneIndex]->Update(); }
+	inline void PhysicsUpdateActiveScene() { m_scenes[m_activeSceneIndex]->PhysicsUpdate(); }
 	inline void RenderActiveScene() { m_scenes[m_activeSceneIndex]->Render(); }
+
+	// Accessors.
+	inline Scene* GetActiveScene() { return m_scenes[m_activeSceneIndex]; }
 private:
 	SceneManager() { }
 	~SceneManager() { delete m_pInstance; }
@@ -23,9 +27,6 @@ private:
 	//std::unordered_map<std::string, Scene*> m_scenes;
 	std::vector<Scene*> m_scenes;
 	uint8_t m_activeSceneIndex = 0;
-
-	void FindNextUniqueName(std::string& name);
-	bool SceneNameTaken(const std::string& name);
 };
 
 SHADOW_NAMESPACE_END

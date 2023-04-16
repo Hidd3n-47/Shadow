@@ -4,15 +4,17 @@
 #include "GameObject/GameObject.h"
 #include "Window/Window.h"
 #include "Camera/Camera.h"
+#include "Time/Time.h"
 
 SHADOW_NAMESPACE_BEGIN
 
 Scene::Scene(const std::string& name, Window* pWindow, Camera* pCamera) : 
 	m_name(name), 
 	m_pWindow(pWindow), 
-	m_pCamera(pCamera)
+	m_pCamera(pCamera), 
+	m_pPhysicsWorld(new b2World({ 0.0f, 9.8f }))
 {
-
+	// Empty.	
 }
 
 Scene::~Scene()
@@ -23,7 +25,7 @@ Scene::~Scene()
 
 GameObject* Scene::CreateEmptyGameObject(std::string name)
 {
-	FindNextUniqueName(name);
+	FindNextUniqueName(m_gameObjects, name);
 
 	GameObject* gameObject = new GameObject(this, name);
 	m_gameObjects.push_back(gameObject);
@@ -70,33 +72,25 @@ void Scene::Update()
 		gm->Update();
 }
 
+void Scene::PhysicsUpdate()
+{
+	// Update each of the game objects physics.
+	for (GameObject* gm : m_gameObjects)
+		gm->PhysicsUpdate();
+
+	float ts = Time::Instance()->GetDeltaTime();
+	m_pPhysicsWorld->Step(ts, m_velocityIterations, m_positionIterations);
+}
+
 void Scene::Render()
 {
 	// Render each of the game objects.
 	for (GameObject* gm : m_gameObjects)
 		gm->Render();
-}
 
-void Scene::FindNextUniqueName(std::string& name)
-{
-	std::string original = name;
-	int counter = 0;
-
-	while (GameObjectNameTaken(name))
-	{
-		counter++;
-
-		name = original + " (" + std::to_string(counter) + ")";
-	}
-}
-
-bool Scene::GameObjectNameTaken(const std::string& name)
-{
-	for (GameObject* go : m_gameObjects)
-		if (go->GetName() == name)
-			return true;
-
-	return false;
+#ifdef RENDER_DEBUG
+	m_pPhysicsWorld->DebugDraw();
+#endif
 }
 
 SHADOW_NAMESPACE_END
