@@ -8,11 +8,11 @@
 
 SHADOW_NAMESPACE_BEGIN
 
-Scene::Scene(const std::string& name, Window* pWindow, Camera* pCamera) : 
+Scene::Scene(uint8_t sceneIndex, const std::string& name, Window* pWindow, Camera* pCamera) :
+	m_index(sceneIndex),
 	m_name(name), 
 	m_pWindow(pWindow), 
-	m_pCamera(pCamera), 
-	m_pPhysicsWorld(new b2World({ 0.0f, 9.8f }))
+	m_pCamera(pCamera)
 {
 	// Empty.	
 }
@@ -25,9 +25,14 @@ Scene::~Scene()
 
 GameObject* Scene::CreateEmptyGameObject(std::string name)
 {
-	FindNextUniqueName(m_gameObjects, name);
+	std::string sceneName = name;
+	auto it = m_gameObjectNames.find(name);
+	if (it != m_gameObjectNames.end())
+		sceneName += " (" + std::to_string(m_gameObjectNames[name]++) + ")";
+	else
+		m_gameObjectNames[name] = 0;
 
-	GameObject* gameObject = new GameObject(this, name);
+	GameObject* gameObject = new GameObject(this, sceneName);
 	m_gameObjects.push_back(gameObject);
 
 	DLOG("Game object '" + name + "' created.");
@@ -47,13 +52,13 @@ bool Scene::RemoveGameObject(GameObject* gameObject)
 		return true;
 	}
 
-	for (GameObject* go : m_gameObjects)
+	for (int i = 0; i < m_gameObjects.size(); i++)
 	{
-		if (go != gameObject)
+		if (m_gameObjects[i] != gameObject)
 			continue;
 
-		delete go;
-		go = m_gameObjects.back();
+		delete m_gameObjects[i];
+		m_gameObjects[i] = m_gameObjects.back();
 		m_gameObjects.pop_back();
 
 		DLOG("Game object '" + name + "' destroyed.");
@@ -68,29 +73,24 @@ void Scene::Update()
 	m_pCamera->Update();
 
 	// Update each of the game objects.
-	for (GameObject* gm : m_gameObjects)
-		gm->Update();
+	for (int i = 0; i < m_gameObjects.size(); i++)
+		m_gameObjects[i]->Update();
 }
 
 void Scene::PhysicsUpdate()
 {
 	// Update each of the game objects physics.
-	for (GameObject* gm : m_gameObjects)
-		gm->PhysicsUpdate();
+	for (int i = 0; i < m_gameObjects.size(); i++)
+		m_gameObjects[i]->PhysicsUpdate();
 
 	float ts = Time::Instance()->GetDeltaTime();
-	m_pPhysicsWorld->Step(ts, m_velocityIterations, m_positionIterations);
 }
 
 void Scene::Render()
 {
 	// Render each of the game objects.
-	for (GameObject* gm : m_gameObjects)
-		gm->Render();
-
-#ifdef RENDER_DEBUG
-	m_pPhysicsWorld->DebugDraw();
-#endif
+	for (int i = 0; i < m_gameObjects.size(); i++)
+		m_gameObjects[i]->Render();
 }
 
 SHADOW_NAMESPACE_END

@@ -1,8 +1,8 @@
 #include "sdpch.h"
 #pragma once
 
-#include "Window/Window.h"
-#include "GameObject/GameObject.h"
+#include <ttf/SDL_ttf.h>
+
 #include "Camera/Camera.h"
 
 SHADOW_NAMESPACE_BEGIN
@@ -40,10 +40,7 @@ private:
 	void Render();
 
 	Scene* m_pMainScene = nullptr;
-	GameObject* gm = nullptr;
-	GameObject* gm2 = nullptr;
-	GameObject* col = nullptr;
-	//Camera m_camera;
+	Camera* m_pMainCamera = nullptr;
 };
 
 SHADOW_NAMESPACE_END

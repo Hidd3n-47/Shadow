@@ -15,6 +15,11 @@ CircleCollider2D::CircleCollider2D(GameObject* pOwner, float radius) :
 	SetComponentType(ComponentType::CircleCollider2D);
 }
 
+CircleCollider2D::~CircleCollider2D()
+{
+	delete m_pCollisionMethods;
+}
+
 void CircleCollider2D::OnComponentAdd()
 {
 	if (!m_pOwner->HasComponent(ComponentType::RigidBody2D))
@@ -41,10 +46,10 @@ void CircleCollider2D::OnComponentAdd()
 
 void CircleCollider2D::Update()
 {
-	if (m_lastFramePosition == m_pOwner->GetTransform()->position)
+	/*if (m_lastFramePosition == m_pOwner->GetTransform()->position)
 		return;
 
-	CollisionHandler::Instance()->AddCircleToDynamicQueue(m_pOwner);
+	CollisionHandler::Instance()->AddCircleToDynamicQueue(m_pOwner);*/
 }
 
 void CircleCollider2D::PhysicsUpdate()
@@ -71,5 +76,25 @@ void CircleCollider2D::OnComponentRemove()
 	
 	DLOG("Circle Collider 2D removed from '" + m_pOwner->GetName() + "'.");
 }
+
+void CircleCollider2D::OnCollisionEnter(Shadow::GameObject* thisGameObject, Shadow::GameObject* otherGameObject)
+{
+	if (m_pCollisionMethods == nullptr)
+		return;
+
+	if (!m_collisionEntered)
+		m_pCollisionMethods->OnCollisionEnter(thisGameObject, otherGameObject);
+	/*else
+		OnCollisionStay(otherGameObject);*/
+
+	//// TODO: Due to not having OnCollisionExit() the OnCollisionEnter() will only be called the first collision.
+	//m_collisionEntered = true;
+}
+
+//void CircleCollider2D::OnCollisionStay(Shadow::GameObject* otherGameObject)
+//{
+//	if (m_pCollisionMethods != nullptr)
+//		m_pCollisionMethods->OnCollisionStay(otherGameObject);
+//}
 
 SHADOW_NAMESPACE_END

@@ -14,11 +14,6 @@ TextureManager::~TextureManager()
 	delete m_pInstance;
 }
 
-void TextureManager::Create()
-{
-
-}
-
 uint16_t TextureManager::Load(std::string filePath, SDL_Renderer* pRenderer, int width, int height)
 {
 	if (width != TILE_WIDTH || height != TILE_WIDTH)

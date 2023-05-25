@@ -12,6 +12,16 @@ SpriteRenderer::SpriteRenderer(GameObject* pOwner, std::string filePath) :
 	m_filePath(filePath)
 {
 	SetComponentType(ComponentType::SpriteRenderer);
+
+	m_textureId = TextureManager::Instance()->Load(m_filePath, WindowManager::Instance()->GetMainWindow()->GetRenderer());
+}
+
+SpriteRenderer::SpriteRenderer(GameObject* pOwner, uint16_t textureId) : 
+	m_pOwner(pOwner),
+	m_textureId(textureId),
+	m_loadTexture(false)
+{
+	SetComponentType(ComponentType::SpriteRenderer);
 }
 
 SpriteRenderer::~SpriteRenderer()
@@ -21,8 +31,6 @@ SpriteRenderer::~SpriteRenderer()
 
 void SpriteRenderer::OnComponentAdd()
 {
-	m_textureId = TextureManager::Instance()->Load(m_filePath, WindowManager::Instance()->GetMainWindow()->GetRenderer());
-
 	DLOG("Sprite Renderer added to '" + m_pOwner->GetName() + "'.")
 }
 
@@ -47,6 +55,9 @@ void SpriteRenderer::OnComponentRemove()
 {
 	// TODO destroys the texture.
 	DLOG("Sprite Renderer removed from '" + m_pOwner->GetName() + "'.");
+
+	if(m_loadTexture)
+		TextureManager::Instance()->RemoveTexture(m_textureId);
 }
 
 SHADOW_NAMESPACE_END

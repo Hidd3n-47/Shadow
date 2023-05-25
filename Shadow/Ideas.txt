@@ -5,14 +5,3 @@ change to a render queue instead
 look at adding scenes as well as layers
 look at creating own texture class which holds things like: texture source dimensions, the scale or destination dimensions, etc.
 add an init stage that initis the textures of the engine, this is default textures such as a no texture texture etc.
-
-Can create a scene.
-A scene will hold  the list of game objecst
-scene holds a reference to the window and the renderer, and this is where everything will be renderered to by getting the sprite renderers game object which gets its scene and finally then gets the renderer from that.
-scene will also have the camera.
-
-use while loop and recursion to test name, eg
-int counter = 0;
-while(NameTaken(name)):
-	name = name + "( counter )"
-	coutner++

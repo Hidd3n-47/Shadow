@@ -35,7 +35,17 @@ void GameObject::AddComponent(IComponent* component)
 
 void GameObject::RemoveComponent(ComponentType component)
 {
-	for (IComponent* comp : m_components)
+	for (int i = 0; i < m_components.size(); i++)
+	{
+		if (m_components[i]->GetComponentType() != component)
+			continue;
+
+		delete m_components[i];
+		m_components[i] = m_components.back();
+		m_components.pop_back();
+	}
+
+	/*for (IComponent* comp : m_components)
 	{
 		if (comp->GetComponentType() != component)
 			continue;
@@ -44,7 +54,7 @@ void GameObject::RemoveComponent(ComponentType component)
 		delete comp;
 		m_components.remove(comp);
 		return;
-	}
+	}*/
 
 	Log::Instance()->Warning("'" + m_name + "' Game Object does not have this component.");
 }
@@ -71,9 +81,18 @@ bool GameObject::HasComponent(ComponentType component)
 
 IComponent* GameObject::GetComponent(ComponentType component)
 {
-	for (IComponent* comp : m_components)
+	/*auto it = m_components.begin();
+	for (it != m_components.end())
+		if (m_components[it]->GetComponentType() == component)
+			return m_components[i];*/
+
+	for (int i = 0; i < m_components.size(); i++)
+		if (m_components[i]->GetComponentType() == component)
+			return m_components[i];
+
+	/*for (IComponent* comp : m_components)
 		if (comp->GetComponentType() == component)
-			return comp;
+			return comp;*/
 
 	return nullptr;
 }
@@ -95,9 +114,7 @@ void GameObject::Render()
 	// ADDITION: Could add debugging render to this.
 
 	for (IComponent* comp : m_components)
-	{
 		comp->Render(m_pTransform->position);
-	}
 }
 
 SHADOW_NAMESPACE_END

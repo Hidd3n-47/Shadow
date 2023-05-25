@@ -1,12 +1,12 @@
 #pragma once
 
-#include <box2d/b2_world.h>
+#include "Window/Window.h"
+#include "Camera/Camera.h"
+#include "GameObject/GameObject.h"
 
 SHADOW_NAMESPACE_BEGIN
 
 class GameObject;
-class Window;
-class Camera;
 
 class Scene
 {
@@ -20,24 +20,21 @@ public:
 	void Render();
 
 	// Accessors.
+	inline uint8_t GetSceneIndex() const { return m_index; }
 	inline std::string GetName() const { return m_name; }
 	inline Window* GetWindow() const { return m_pWindow; }
 	inline Camera* GetCamera() const { return m_pCamera; }
-	inline b2World* GetPhysicsWorld() const { return m_pPhysicsWorld; }
 private:
-	Scene(const std::string& name, Window* pWindow, Camera* pCamera);
+	Scene(uint8_t sceneIndex, const std::string& name, Window* pWindow, Camera* pCamera);
 	~Scene();
 
-	std::string m_name;
+	uint8_t m_index = 0;
+	std::string m_name = "none";
 	Window* m_pWindow = nullptr;
 	Camera* m_pCamera = nullptr;
 
 	std::vector<GameObject*> m_gameObjects;
-
-	b2World* m_pPhysicsWorld = nullptr;
-
-	const int32 m_velocityIterations = 6;
-	const int32 m_positionIterations = 2;
+	std::unordered_map<std::string, unsigned int> m_gameObjectNames;
 };
 
 SHADOW_NAMESPACE_END

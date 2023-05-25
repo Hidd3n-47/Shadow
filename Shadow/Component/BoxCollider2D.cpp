@@ -36,22 +36,13 @@ BoxCollider2D::BoxCollider2D(GameObject* pOwner) :
 	SetComponentType(ComponentType::BoxCollider2D);
 }
 
-//BoxCollider2D::BoxCollider2D(GameObject* pOwner, glm::vec2 dimensions, bool trigger) :
-//	m_pOwner(pOwner),
-//	m_trigger(trigger)
-//{
-//	/*m_boxCollider.x = position.x;
-//	m_boxCollider.y = position.y;
-//	m_boxCollider.w = dimensions.x;
-//	m_boxCollider.h = dimensions.y;*/
-//	m_pOwner->dim = dimensions;
-//
-//}
+BoxCollider2D::~BoxCollider2D()
+{
+	delete m_pCollisionMethods;
+}
 
 void BoxCollider2D::OnComponentAdd()
 {
-	// BUG: There is a bug with this as a person can remove the rigid body after box collider created meaning it will try remove it from static not dynamic.
-	// add to the collsion handler network.
 	if (!m_pOwner->HasComponent(ComponentType::RigidBody2D))
 	{
 		CollisionHandler::Instance()->AddBoxToStatic(m_pOwner);
@@ -76,11 +67,11 @@ void BoxCollider2D::OnComponentAdd()
 
 void BoxCollider2D::Update()
 {
-	if (m_lastFramePosition == m_pOwner->GetTransform()->position)
+	/*if (m_lastFramePosition == m_pOwner->GetTransform()->position)
 		return;
 
 	CollisionHandler::Instance()->AddBoxToDynamicQueue(m_pOwner);
-	m_lastFramePosition = m_pOwner->GetTransform()->position;
+	m_lastFramePosition = m_pOwner->GetTransform()->position;*/
 }
 
 void BoxCollider2D::PhysicsUpdate()
@@ -101,32 +92,57 @@ void BoxCollider2D::Render(glm::vec3 worldPosition)
 #endif
 }
 
-void BoxCollider2D::Trigger()
+void BoxCollider2D::Trigger(GameObject* thisCollider, GameObject* otherCollider)
 {
 	m_calledThisFrame = true;
 
 	if (!m_triggered)
-		OnTriggerEnter();
+		OnTriggerEnter(thisCollider, otherCollider);
 	else
-		OnTriggerStay();
+		OnTriggerStay(thisCollider, otherCollider);
 }
 
-void BoxCollider2D::OnTriggerEnter()
+void BoxCollider2D::OnTriggerEnter(GameObject* thisCollider, GameObject* otherCollider)
 {
 	m_triggered = true;
+
+	if (m_pTriggerFunction != nullptr)
+		m_pTriggerFunction->OnTriggerEnter(thisCollider, otherCollider);
 }
 
-void BoxCollider2D::OnTriggerStay()
+void BoxCollider2D::OnTriggerStay(GameObject* thisCollider, GameObject* otherCollider)
 {
-	
-
+	if (m_pTriggerFunction != nullptr)
+		m_pTriggerFunction->OnTriggerStay(thisCollider, otherCollider);
 }
 
 void BoxCollider2D::OnTriggerExit()
 {
 	m_triggered = false;
 
+	if (m_pTriggerFunction != nullptr)
+		m_pTriggerFunction->OnTriggerExit();
 }
+
+void BoxCollider2D::OnCollisionEnter(Shadow::GameObject* thisGameObject, Shadow::GameObject* otherGameObject)
+{
+	if (m_pCollisionMethods == nullptr)
+		return;
+
+	if (!m_collisionEntered)
+		m_pCollisionMethods->OnCollisionEnter(thisGameObject, otherGameObject);
+	/*else
+		OnCollisionStay(otherGameObject);*/
+
+	//// TODO: Due to not having OnCollisionExit() the OnCollisionEnter() will only be called the first collision.
+	//m_collisionEntered = true;
+}
+
+//void BoxCollider2D::OnCollisionStay(Shadow::GameObject* otherGameObject)
+//{
+//	if (m_pCollisionMethods != nullptr)
+//		m_pCollisionMethods->OnCollisionStay(otherGameObject);
+//}
 
 void BoxCollider2D::OnComponentRemove()
 {

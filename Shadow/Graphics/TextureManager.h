@@ -27,8 +27,6 @@ class TextureManager
 public:
 	inline static TextureManager* Instance() { return m_pInstance == nullptr ? m_pInstance = new TextureManager() : m_pInstance; }
 
-	void Create();
-
 	uint16_t Load(std::string filePath, SDL_Renderer* pRenderer, int width = TILE_WIDTH, int height = TILE_WIDTH);
 
 	void RenderSingle(Camera* pCamera, SDL_Renderer* pRenderer, uint16_t id, glm::vec2 world, glm::vec2 scale, int sheetX = 0, int sheetY = 0, SDL_RendererFlip flip = SDL_FLIP_NONE);

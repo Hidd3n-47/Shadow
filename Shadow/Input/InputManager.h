@@ -76,6 +76,18 @@ typedef enum
 	KEYCODE_x = 'x',
 	KEYCODE_y = 'y',
 	KEYCODE_z = 'z',
+	//SHADOW_BUTTON(X) = (1 << ((X)-1)),
+	BUTTON_LEFT = 1,
+	BUTTON_MIDDLE = 2,
+	BUTTON_RIGHT = 3,
+	BUTTON_X1 = 4,
+	BUTTON_X2 = 5
+	/*BUTTON_LMASK    SDL_BUTTON(SDL_BUTTON_LEFT)
+	BUTTON_MMASK    SDL_BUTTON(SDL_BUTTON_MIDDLE)
+	BUTTON_RMASK    SDL_BUTTON(SDL_BUTTON_RIGHT)
+	BUTTON_X1MASK   SDL_BUTTON(SDL_BUTTON_X1)
+	BUTTON_X2MASK   SDL_BUTTON(SDL_BUTTON_X2)*/
+	
 };
 
 /***
@@ -93,6 +105,10 @@ public:
 
 	void Listen();
 	bool IsKeyDown(uint16_t keyId);
+	bool IsMouseDown(uint8_t mouseId);
+	inline bool LeftMouseReleased() { return m_leftMouseReleased; }
+
+	glm::vec2 GetMousePosition();
 
 	inline void Destory() { delete m_pInstance; m_pInstance = nullptr; }
 private:
@@ -104,10 +120,14 @@ private:
 	// Private methods.
 	void KeyDown(uint16_t keyId);
 	void KeyUp(uint16_t keyId);
-	uint16_t a = SDLK_1;
+	void MouseDown(uint8_t buttonId);
+	void MouseUp(uint8_t buttonId);
 
 	// Private variables.
 	std::unordered_map<uint16_t, bool> m_keyMap;
+	std::unordered_map<uint8_t, bool> m_mouseMap;
+
+	bool m_leftMouseReleased = false;
 };
 
 SHADOW_NAMESPACE_END

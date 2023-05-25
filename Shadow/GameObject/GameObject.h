@@ -30,9 +30,10 @@ public:
 	inline Transform* GetTransform() const { return m_pTransform; }
 	inline std::string GetName() const { return m_name; }
 	IComponent* GetComponent(ComponentType component);
+	inline std::string GetTag() const { return m_tag; }
 
-	// tmp
-	glm::vec2 dim;
+	// Mutators.
+	inline void SetTag(const std::string& tag) { m_tag = tag; }
 private:
 	GameObject(Scene* pOwner, const std::string& name);
 	~GameObject();
@@ -40,8 +41,11 @@ private:
 	Scene* m_pOwner = nullptr;
 	std::string m_name;
 	Transform* m_pTransform;
+
+	std::string m_tag = "";
 	
-	std::list<IComponent*> m_components;
+	//std::list<IComponent*> m_components;
+	std::vector<IComponent*> m_components;
 
 	void Update();
 	void PhysicsUpdate();

@@ -19,6 +19,36 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ZomSurv\Level\AmmoTrigger.cpp" />
+    <ClCompile Include="Audio\Audio.cpp" />
+    <ClCompile Include="ZomSurv\AI\NavMesh.cpp" />
+    <ClCompile Include="ZomSurv\Level\PerkMachineTrigger.cpp" />
+    <ClCompile Include="ZomSurv\PickUp\IPickUp.cpp" />
+    <ClCompile Include="ZomSurv\PickUp\PickUpManager.cpp" />
+    <ClCompile Include="ZomSurv\Weapons\Bullet\BulletCollision.cpp" />
+    <ClCompile Include="ZomSurv\Entity\Player\Hud.cpp" />
+    <ClCompile Include="ZomSurv\src\GameSceneStates\PlayingState.cpp" />
+    <ClCompile Include="Graphics\Button.cpp" />
+    <ClCompile Include="ZomSurv\src\GameSceneStates\DeathState.cpp" />
+    <ClCompile Include="Graphics\FontManager.cpp" />
+    <ClCompile Include="ZomSurv\src\GameSceneStates\LoadingState.cpp" />
+    <ClCompile Include="ZomSurv\src\GameSceneStates\MainMenuState.cpp" />
+    <ClCompile Include="ZomSurv\src\GameStates\WaveDisplayState.cpp" />
+    <ClCompile Include="ZomSurv\Entity\Zombie\ZombieCollision.cpp" />
+    <ClCompile Include="ZomSurv\Level\Door.cpp" />
+    <ClCompile Include="ZomSurv\src\GameStates\WaveBeingPlayedState.cpp" />
+    <ClCompile Include="ZomSurv\src\GameStates\GameStateManager.cpp" />
+    <ClCompile Include="ZomSurv\src\ZombieManager.cpp" />
+    <ClCompile Include="ZomSurv\src\GameStates\SpawningZombiesState.cpp" />
+    <ClCompile Include="ZomSurv\src\GameStates\PreWaveState.cpp" />
+    <ClCompile Include="Random\Random.cpp" />
+    <ClCompile Include="ZomSurv\Entity\Zombie\IZombie.cpp" />
+    <ClCompile Include="ZomSurv\Level\DoorTrigger.cpp" />
+    <ClCompile Include="ZomSurv\Level\LevelManager.cpp" />
+    <ClCompile Include="ZomSurv\Level\Room\RoomManager.cpp" />
+    <ClCompile Include="ZomSurv\Entity\Player\Player.cpp" />
+    <ClCompile Include="ZomSurv\src\GameManager.cpp" />
+    <ClCompile Include="ZomSurv\Level\LevelParser.cpp" />
     <ClCompile Include="Camera\Camera.cpp" />
     <ClCompile Include="Component\CircleCollider2D.cpp" />
     <ClCompile Include="Component\BoxCollider2D.cpp" />
@@ -27,12 +57,12 @@
     <ClCompile Include="GameObject\GameObject.cpp" />
     <ClCompile Include="GameObject\GameObjectManager.cpp" />
     <ClCompile Include="Input\InputManager.cpp" />
+    <ClCompile Include="FileIO\IOManager.cpp" />
     <ClCompile Include="Logger\Log.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Component\SpriteRenderer.cpp" />
     <ClCompile Include="Component\RigidBody2D.cpp" />
     <ClCompile Include="Camera\OrthographicCamera.cpp" />
-    <ClCompile Include="Component\Physics2D.cpp" />
     <ClCompile Include="Scene\Scene.cpp" />
     <ClCompile Include="Scene\SceneManager.cpp" />
     <ClCompile Include="src\sdpch.cpp">
@@ -43,8 +73,51 @@
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="Time\Time.cpp" />
     <ClCompile Include="Window\WindowManager.cpp" />
+    <ClCompile Include="ZomSurv\Weapons\Ammo\Ammo.cpp" />
+    <ClCompile Include="ZomSurv\Weapons\Bullet\Bullet.cpp" />
+    <ClCompile Include="ZomSurv\Weapons\Bullet\BulletManager.cpp" />
+    <ClCompile Include="ZomSurv\Weapons\Gun.cpp" />
+    <ClCompile Include="ZomSurv\Weapons\GunManager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ZomSurv\Level\AmmoTrigger.h" />
+    <ClInclude Include="Audio\Audio.h" />
+    <ClInclude Include="Audio\SoundEffect.h" />
+    <ClInclude Include="Node.h" />
+    <ClInclude Include="ZomSurv\Level\PerkMachineTrigger.h" />
+    <ClInclude Include="ZomSurv\PickUp\PickupTriggers.h" />
+    <ClInclude Include="ZomSurv\PickUp\PickUpManager.h" />
+    <ClInclude Include="ZomSurv\PickUp\IPickUp.h" />
+    <ClInclude Include="ZomSurv\Weapons\Bullet\BulletCollision.h" />
+    <ClInclude Include="Component\ITrigger.h" />
+    <ClInclude Include="Component\ICollisionMethods.h" />
+    <ClInclude Include="ZomSurv\Entity\Player\Hud.h" />
+    <ClInclude Include="ZomSurv\src\GameSceneStates\PlayingState.h" />
+    <ClInclude Include="Graphics\Button.h" />
+    <ClInclude Include="ZomSurv\src\GameSceneStates\DeathState.h" />
+    <ClInclude Include="Graphics\FontManager.h" />
+    <ClInclude Include="ZomSurv\src\GameSceneStates\LoadingState.h" />
+    <ClInclude Include="ZomSurv\src\GameSceneStates\MainMenuState.h" />
+    <ClInclude Include="ZomSurv\src\GameStates\WaveDisplayState.h" />
+    <ClInclude Include="ZomSurv\AI\NavMesh.h" />
+    <ClInclude Include="ZomSurv\Entity\Zombie\ZombieCollision.h" />
+    <ClInclude Include="ZomSurv\src\GameStates\WaveBeingPlayedState.h" />
+    <ClInclude Include="ZomSurv\src\GameStates\GameStateManager.h" />
+    <ClInclude Include="ZomSurv\src\ZombieManager.h" />
+    <ClInclude Include="ZomSurv\src\GameStates\SpawningZombiesState.h" />
+    <ClInclude Include="ZomSurv\src\GameStates\PreWaveState.h" />
+    <ClInclude Include="ZomSurv\src\GameStates\IGameState.h" />
+    <ClInclude Include="Random\Random.h" />
+    <ClInclude Include="ZomSurv\Entity\Zombie\IZombie.h" />
+    <ClInclude Include="ZomSurv\Level\Door.h" />
+    <ClInclude Include="ZomSurv\Level\DoorTrigger.h" />
+    <ClInclude Include="ZomSurv\Level\LevelManager.h" />
+    <ClInclude Include="ZomSurv\Level\Room\RoomManager.h" />
+    <ClInclude Include="ZomSurv\Entity\Player\Player.h" />
+    <ClInclude Include="ZomSurv\Entity\IEntity.h" />
+    <ClInclude Include="ZomSurv\src\GameManager.h" />
+    <ClInclude Include="ZomSurv\Level\LevelData.h" />
+    <ClInclude Include="ZomSurv\Level\LevelParser.h" />
     <ClInclude Include="Camera\Camera.h" />
     <ClInclude Include="Component\CircleCollider2D.h" />
     <ClInclude Include="Graphics\Color.h" />
@@ -55,12 +128,11 @@
     <ClInclude Include="GameObject\GameObjectManager.h" />
     <ClInclude Include="GameObject\GameObject.h" />
     <ClInclude Include="Input\InputManager.h" />
-    <ClInclude Include="IScene.h" />
+    <ClInclude Include="FileIO\IOManager.h" />
     <ClInclude Include="Logger\Log.h" />
     <ClInclude Include="Component\SpriteRenderer.h" />
     <ClInclude Include="Component\RigidBody2D.h" />
     <ClInclude Include="Camera\OrthographicCamera.h" />
-    <ClInclude Include="Component\Physics2D.h" />
     <ClInclude Include="Scene\Scene.h" />
     <ClInclude Include="Scene\SceneManager.h" />
     <ClInclude Include="src\sdpch.h" />
@@ -70,6 +142,11 @@
     <ClInclude Include="Time\Time.h" />
     <ClInclude Include="Window\WindowManager.h" />
     <ClInclude Include="Window\Window.h" />
+    <ClInclude Include="ZomSurv\Weapons\Ammo\Ammo.h" />
+    <ClInclude Include="ZomSurv\Weapons\Bullet\Bullet.h" />
+    <ClInclude Include="ZomSurv\Weapons\Bullet\BulletManager.h" />
+    <ClInclude Include="ZomSurv\Weapons\Gun.h" />
+    <ClInclude Include="ZomSurv\Weapons\GunManager.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Ideas.txt" />
@@ -100,6 +177,7 @@
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
+    <EnableASAN>false</EnableASAN>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -107,6 +185,7 @@
     <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
+    <EnableASAN>false</EnableASAN>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -171,13 +250,15 @@
       <LanguageStandard>stdcpp20</LanguageStandard>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>sdpch.h</PrecompiledHeaderFile>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>
       </AdditionalLibraryDirectories>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;Box2D.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;SDL2_ttf.lib;SDL2_mixer.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -191,6 +272,7 @@
       <LanguageStandard>stdcpp20</LanguageStandard>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>sdpch.h</PrecompiledHeaderFile>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -199,7 +281,8 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>
       </AdditionalLibraryDirectories>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;Box2D.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;SDL2_ttf.lib;SDL2_mixer.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
     </Link>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
