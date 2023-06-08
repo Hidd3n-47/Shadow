@@ -5,3 +5,19 @@ change to a render queue instead
 look at adding scenes as well as layers
 look at creating own texture class which holds things like: texture source dimensions, the scale or destination dimensions, etc.
 add an init stage that initis the textures of the engine, this is default textures such as a no texture texture etc.
+
+Letf to do:
+	- Try add zombie sounds
+	- Zombie and player rotation and animation
+	- Blood effects when shot or hit
+	- (Addition) could try add zombie limbs that stay for a bit after zombie dies or takes damage
+	- Potentailly better graphics on the start and death screen
+	- Better perk art 
+	- Pack a punch?
+	- Add player health to HUD (DONE - CHECK)
+	- Perk indication at the bottom on the hud (DONE)
+	- Pickup indication in the hud (DONE)
+
+
+Bugs:
+	- Health bar does not disappear, need to make sure that the bar fills up all the way as I think it might be capped half way.

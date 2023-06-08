@@ -36,7 +36,7 @@ uint16_t TextureManager::Load(std::string filePath, SDL_Renderer* pRenderer, int
 	return m_id++;
 }
 
-void TextureManager::RenderSingle(Camera* pCamera, SDL_Renderer* pRenderer, uint16_t id, glm::vec2 world, glm::vec2 scale, int sheetX, int sheetY, SDL_RendererFlip flip)
+void TextureManager::RenderSingle(Camera* pCamera, SDL_Renderer* pRenderer, uint16_t id, glm::vec2 world, glm::vec2 scale, const glm::vec2& dimensions, int sheetX, int sheetY, SDL_RendererFlip flip)
 {
 	glm::vec3 camPosition = pCamera->GetPosition();
 	float width, height;
@@ -47,8 +47,21 @@ void TextureManager::RenderSingle(Camera* pCamera, SDL_Renderer* pRenderer, uint
 	if (world.x < camPosition.x - width || world.x > camPosition.x + width || world.y > camPosition.y + height || world.y < camPosition.y - height)
 		return;
 
-	SDL_Rect srcRect = { sheetX, sheetY, TILE_WIDTH, TILE_WIDTH };
-	SDL_Rect destRect = { floor(world.x - camPosition.x + width * 0.5f), floor(world.y - camPosition.y + height * 0.5f), TILE_WIDTH * scale.x, TILE_WIDTH * scale.y };
+	SDL_Rect srcRect;
+	SDL_Rect destRect;
+
+	if (dimensions == glm::vec2(-1.0f))
+	{
+		srcRect = { sheetX, sheetY, TILE_WIDTH, TILE_WIDTH };
+		SDL_Rect r = { floor(world.x - camPosition.x + width * 0.5f), floor(world.y - camPosition.y + height * 0.5f), TILE_WIDTH * scale.x, TILE_WIDTH * scale.y };
+		destRect = r;
+	}
+	else
+	{
+		srcRect = { sheetX, sheetY, (int)dimensions.x, (int)dimensions.y };
+		SDL_Rect r = { floor(world.x - camPosition.x + width * 0.5f), floor(world.y - camPosition.y + height * 0.5f), dimensions.x * scale.x, dimensions.y * scale.y };
+		destRect = r;
+	}
 
 	int err = SDL_RenderCopyEx(pRenderer, m_textureMap[id], &srcRect, &destRect, 0, nullptr, flip);
 

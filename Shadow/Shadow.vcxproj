@@ -19,6 +19,10 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ParticleSystem\ParticleEffect.cpp" />
+    <ClCompile Include="ParticleSystem\Particle.cpp" />
+    <ClCompile Include="ParticleSystem\ParticleManager.cpp" />
+    <ClCompile Include="ZomSurv\AI\PathManager.cpp" />
     <ClCompile Include="ZomSurv\Level\AmmoTrigger.cpp" />
     <ClCompile Include="Audio\Audio.cpp" />
     <ClCompile Include="ZomSurv\AI\NavMesh.cpp" />
@@ -70,7 +74,6 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Graphics\TextureManager.cpp" />
-    <ClCompile Include="Texture.cpp" />
     <ClCompile Include="Time\Time.cpp" />
     <ClCompile Include="Window\WindowManager.cpp" />
     <ClCompile Include="ZomSurv\Weapons\Ammo\Ammo.cpp" />
@@ -80,10 +83,15 @@
     <ClCompile Include="ZomSurv\Weapons\GunManager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ParticleSystem\ParticleEffect.h" />
+    <ClInclude Include="ParticleSystem\Particle.h" />
+    <ClInclude Include="ParticleSystem\ParticleManager.h" />
+    <ClInclude Include="ZomSurv\AI\Node.h" />
+    <ClInclude Include="ZomSurv\AI\Path.h" />
+    <ClInclude Include="ZomSurv\AI\PathManager.h" />
     <ClInclude Include="ZomSurv\Level\AmmoTrigger.h" />
     <ClInclude Include="Audio\Audio.h" />
     <ClInclude Include="Audio\SoundEffect.h" />
-    <ClInclude Include="Node.h" />
     <ClInclude Include="ZomSurv\Level\PerkMachineTrigger.h" />
     <ClInclude Include="ZomSurv\PickUp\PickupTriggers.h" />
     <ClInclude Include="ZomSurv\PickUp\PickUpManager.h" />
@@ -138,7 +146,6 @@
     <ClInclude Include="src\sdpch.h" />
     <ClInclude Include="Graphics\TextureManager.h" />
     <ClInclude Include="Physics\Transform.h" />
-    <ClInclude Include="Texture.h" />
     <ClInclude Include="Time\Time.h" />
     <ClInclude Include="Window\WindowManager.h" />
     <ClInclude Include="Window\Window.h" />

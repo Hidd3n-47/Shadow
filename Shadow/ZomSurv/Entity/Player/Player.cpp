@@ -59,6 +59,7 @@ void Player::Update(const glm::vec3& moveDirection)
 		{
 			float health = m_health + m_healthRegenPerSecond * dt;
 			m_health = health > m_maxHealth ? m_maxHealth : health;
+			Hud::Instance()->UpdateHealthBar(health, m_maxHealth);
 		}
 	}
 	else
@@ -78,6 +79,7 @@ bool Player::Damage(uint16_t damage)
 		return false;
 
 	m_health -= damage;
+	Hud::Instance()->UpdateHealthBar(m_health, m_maxHealth);
 	return true;
 }
 

@@ -14,7 +14,7 @@ void IPickUp::Init(Shadow::Scene* pScene, const glm::vec2& position, const std::
 	m_pGameObject->GetTransform()->position = { position.x, position.y, 0.0f };
 
 	Shadow::SpriteRenderer* sr = new Shadow::SpriteRenderer(m_pGameObject, textureId);
-	Shadow::BoxCollider2D* bc = new Shadow::BoxCollider2D(m_pGameObject, true);
+	Shadow::BoxCollider2D* bc = new Shadow::BoxCollider2D(m_pGameObject, glm::vec2(TILE_WIDTH * 0.5f, TILE_WIDTH * 0.5f), true);
 	bc->SetTriggerFunction(triggerMethods);
 
 	m_pGameObject->AddComponent(sr);

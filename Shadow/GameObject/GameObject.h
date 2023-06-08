@@ -31,9 +31,11 @@ public:
 	inline std::string GetName() const { return m_name; }
 	IComponent* GetComponent(ComponentType component);
 	inline std::string GetTag() const { return m_tag; }
+	inline bool GetIsActive() const { return m_isActive; }
 
 	// Mutators.
 	inline void SetTag(const std::string& tag) { m_tag = tag; }
+	inline void SetIsActive(bool activity) { m_isActive = activity; }
 private:
 	GameObject(Scene* pOwner, const std::string& name);
 	~GameObject();
@@ -43,6 +45,8 @@ private:
 	Transform* m_pTransform;
 
 	std::string m_tag = "";
+
+	bool m_isActive = true;
 	
 	//std::list<IComponent*> m_components;
 	std::vector<IComponent*> m_components;

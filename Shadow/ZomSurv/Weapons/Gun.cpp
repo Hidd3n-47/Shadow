@@ -64,7 +64,7 @@ void Gun::Shoot()
 	float angle = glm::angle(dir, glm::vec2(1.0f, 0.0f));
 
 	if (dir.y < 0)
-		angle = 2 * 3.14159265358979323846264338327950288 - angle;
+		angle = 2 * PI - angle;
 
 	glm::vec2 bulletPos = { playerPosition.x + 35 * cos(angle), playerPosition.y + 35 * sin(angle) };
 

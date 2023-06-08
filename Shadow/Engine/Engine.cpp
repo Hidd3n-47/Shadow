@@ -10,6 +10,7 @@
 #include "Time/Time.h"
 #include "Graphics/TextureManager.h"
 #include "Audio/Audio.h"
+#include "ParticleSystem/ParticleManager.h"
 
 #include "ZomSurv/src/GameManager.h"
 
@@ -91,6 +92,7 @@ void Engine::Update()
 {
 	SceneManager::Instance()->UpdateActiveScene();
 	GameManager::Instance()->Update();
+	ParticleManager::Instance()->Update();
 }
 
 void Engine::PhysicsUpdate()
@@ -107,6 +109,7 @@ void Engine::Render()
 
 	SDL_RenderClear(pRen);
 
+	ParticleManager::Instance()->Render();
 	SceneManager::Instance()->RenderActiveScene();
 	FontManager::Instance()->RenderFonts();
 

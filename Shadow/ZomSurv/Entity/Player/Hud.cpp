@@ -29,6 +29,50 @@ void Hud::Init(uint8_t wave, unsigned int score)
 	Shadow::SceneManager::Instance()->GetActiveScene()->GetCamera()->GetWidthAndHeight(w, h);
 	m_cameraExtentDimentions = glm::vec2(w * 0.5f, h * 0.5f);
 
+	// Game Object Creation.
+	Shadow::Scene* pScene = Shadow::SceneManager::Instance()->GetActiveScene();
+
+	m_pHealthBar	= pScene->CreateEmptyGameObject("HealthBar");
+	m_pHealth		= pScene->CreateEmptyGameObject("Health");
+	m_pInstaKill	= pScene->CreateEmptyGameObject("InstaKillShield");
+	m_pDoublePoints	= pScene->CreateEmptyGameObject("DoublePointsShield");
+	m_pQuickRevive	= pScene->CreateEmptyGameObject("QuickRevive");
+	m_pDoubleTap	= pScene->CreateEmptyGameObject("DoubleTap");
+	m_pSpeedCola	= pScene->CreateEmptyGameObject("SpeedCola");
+	m_pJug			= pScene->CreateEmptyGameObject("Jug");
+
+	// Adding Sprite Renderers.
+	Shadow::SpriteRenderer* sr = new Shadow::SpriteRenderer(m_pHealthBar, "Assets/healthBar.png", HEALTH_BAR_DIMENTIONS, glm::vec2(-HEALTH_BAR_DIMENTIONS.x * 0.5f, m_cameraExtentDimentions.y - 60.0f), true);
+	m_pHealthBar->AddComponent(sr);
+
+	m_pHealthSpriteRenderer = new Shadow::SpriteRenderer(m_pHealth, "Assets/health.png", HEALTH_BAR_DIMENTIONS, glm::vec2(-HEALTH_BAR_DIMENTIONS.x * 0.5f, m_cameraExtentDimentions.y - 60.0f), true);
+	m_pHealth->AddComponent(m_pHealthSpriteRenderer);
+
+	sr = new Shadow::SpriteRenderer(m_pInstaKill, "Assets/Environment/PerkMachines/instaKillShield.png", PERK_PROMPT, glm::vec2(-PERK_PROMPT.x - 5.0f, -m_cameraExtentDimentions.y + 5.0f), true);
+	m_pInstaKill->AddComponent(sr);
+
+	sr = new Shadow::SpriteRenderer(m_pDoublePoints, "Assets/Environment/PerkMachines/doublePointsShield.png", PERK_PROMPT, glm::vec2(5.0f, -m_cameraExtentDimentions.y + 5.0f), true);
+	m_pDoublePoints->AddComponent(sr);
+
+	sr = new Shadow::SpriteRenderer(m_pQuickRevive, "Assets/Environment/PerkMachines/quickReviveSym.png", PERK_PROMPT, glm::vec2(-(PERK_PROMPT.x + 5.0f) * 2.0f, m_cameraExtentDimentions.y - 110.0f), true);
+	m_pQuickRevive->AddComponent(sr);
+
+	sr = new Shadow::SpriteRenderer(m_pDoubleTap, "Assets/Environment/PerkMachines/doubleTapSym.png", PERK_PROMPT, glm::vec2(-PERK_PROMPT.x - 5.0f, m_cameraExtentDimentions.y - 110.0f), true);
+	m_pDoubleTap->AddComponent(sr);
+
+	sr = new Shadow::SpriteRenderer(m_pSpeedCola, "Assets/Environment/PerkMachines/speedColaSym.png", PERK_PROMPT, glm::vec2(5.0f, m_cameraExtentDimentions.y - 110.0f), true);
+	m_pSpeedCola->AddComponent(sr);
+
+	sr = new Shadow::SpriteRenderer(m_pJug, "Assets/Environment/PerkMachines/jugSym.png", PERK_PROMPT, glm::vec2(10.0f + PERK_PROMPT.x, m_cameraExtentDimentions.y - 110.0f), true);
+	m_pJug->AddComponent(sr);
+
+	m_pInstaKill->SetIsActive(false);
+	m_pDoublePoints->SetIsActive(false);
+	m_pQuickRevive->SetIsActive(false);
+	m_pDoubleTap->SetIsActive(false);
+	m_pSpeedCola->SetIsActive(false);
+	m_pJug->SetIsActive(false);
+
 	UpdateAmmo();
 }
 
@@ -67,6 +111,17 @@ void Hud::UpdateAmmo()
 	m_ammoFont = Shadow::FontManager::Instance()->CreateFont("Assets/Fonts/Louis George Cafe Bold.ttf", AMMO_FONT_SIZE, ammoStr, Color(Red), AMMO_POS);
 
 	m_ammoFontCreated = true;
+}
+
+void Hud::UpdateHealthBar(float health, float maxHealth)
+{
+	const glm::vec2 healthBarDims = { 160.0f, 50.0f };
+
+	float percent = health / maxHealth;
+
+	int width = (int)(healthBarDims.x * percent);
+
+	m_pHealthSpriteRenderer->SetDimensions({ width, healthBarDims.y });
 }
 
 void Hud::DisplayReloadingUpdate(uint16_t fontId, bool display, const glm::vec2& offset)

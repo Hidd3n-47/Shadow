@@ -6,6 +6,7 @@
 void DeathState::OnStateEnter()
 {
 	Shadow::SceneManager::Instance()->SetActiveScene(m_pScene);
+	Shadow::FontManager::Instance()->DeleteAllFonts();
 
 	float width, height;
 	m_pScene->GetCamera()->GetWidthAndHeight(width, height);

@@ -43,6 +43,12 @@ public:
 	inline void PurchaseSpeedCola() { m_speedCola = true; }
 	inline float GetReloadMultiplier() { if (m_speedCola) return 2.0f; else return 1.0f; }
 
+	// Inline Sound effects.
+	inline void PlayMaxAmmoSound()		{ Shadow::Audio::Instance()->PlaySound(m_maxAmmoAudio); }
+	inline void PlayNukeSound()			{ Shadow::Audio::Instance()->PlaySound(m_nukeAudio); }
+	inline void PlayInstaKillSound()	{ Shadow::Audio::Instance()->PlaySound(m_instaKillAudio); }
+	inline void PlayDoublePointsSound() { Shadow::Audio::Instance()->PlaySound(m_doublePointsAudio); }
+
 	// Accessors.
 	inline uint8_t GetWave() const { return m_wave; }
 	inline Shadow::Scene* GetScene() const { return m_pGameScene; }
@@ -81,6 +87,10 @@ private:
 
 	Uint16 m_musicId = 0;
 
-	void ResetTimers();
+	// Audio ID's.
+	uint16_t m_maxAmmoAudio = 0;
+	uint16_t m_nukeAudio = 0;
+	uint16_t m_instaKillAudio = 0;
+	uint16_t m_doublePointsAudio = 0;
 };
 

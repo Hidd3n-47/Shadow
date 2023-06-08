@@ -45,17 +45,6 @@ void GameObject::RemoveComponent(ComponentType component)
 		m_components.pop_back();
 	}
 
-	/*for (IComponent* comp : m_components)
-	{
-		if (comp->GetComponentType() != component)
-			continue;
-
-		comp->OnComponentRemove();
-		delete comp;
-		m_components.remove(comp);
-		return;
-	}*/
-
 	Log::Instance()->Warning("'" + m_name + "' Game Object does not have this component.");
 }
 
@@ -81,37 +70,35 @@ bool GameObject::HasComponent(ComponentType component)
 
 IComponent* GameObject::GetComponent(ComponentType component)
 {
-	/*auto it = m_components.begin();
-	for (it != m_components.end())
-		if (m_components[it]->GetComponentType() == component)
-			return m_components[i];*/
-
 	for (int i = 0; i < m_components.size(); i++)
 		if (m_components[i]->GetComponentType() == component)
 			return m_components[i];
-
-	/*for (IComponent* comp : m_components)
-		if (comp->GetComponentType() == component)
-			return comp;*/
 
 	return nullptr;
 }
 
 void GameObject::Update()
 {
+	if (!m_isActive)
+		return;
+
 	for (IComponent* comp : m_components)
 		comp->Update();
 }
 
 void GameObject::PhysicsUpdate()
 {
+	if (!m_isActive)
+		return;
+
 	for (IComponent* comp : m_components)
 		comp->PhysicsUpdate();
 }
 
 void GameObject::Render()
 {
-	// ADDITION: Could add debugging render to this.
+	if (!m_isActive)
+		return;
 
 	for (IComponent* comp : m_components)
 		comp->Render(m_pTransform->position);

@@ -3,6 +3,9 @@
 
 struct Node
 {
+	Node() { }
+	Node(short id, const glm::vec2& position) : id(id), position(position) { }
+
 	glm::vec2 position;
 	short id;
 };

@@ -7,6 +7,7 @@
 
 #include "ZomSurv/src/GameManager.h"
 #include "ZomSurv/Level/LevelManager.h"
+#include "ZomSurv/Entity/Player/Hud.h"
 
 PerkMachineTrigger::PerkMachineTrigger(Shadow::Scene* pScene, int perkId, const glm::vec2& worldPosition) :
 	m_pScene(pScene),
@@ -98,6 +99,22 @@ void PerkMachineTrigger::PerkNameFromId(int perkId)
 
 void PerkMachineTrigger::BuyPerk()
 {
+	switch (m_perkId)
+	{
+	case 100:
+		Hud::Instance()->SetQuickReviveActive(true);
+		break;
+	case 101:
+		Hud::Instance()->SetSpeedColaActive(true);
+		break;
+	case 102:
+		Hud::Instance()->SetDoubleTapActive(true);
+		break;
+	case 103:
+		Hud::Instance()->SetJugActive(true);
+		break;
+	}
+
 	LevelManager::Instance()->BuyPerk(m_perkId);
 
 	Shadow::DLOG("Room with trigger of " + std::to_string(m_perkId) + " purchased");

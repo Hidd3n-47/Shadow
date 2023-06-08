@@ -13,6 +13,8 @@ public:
 	{
 		if (otherCollider->GetTag() != "Player")
 			return;
+		
+		GameManager::Instance()->PlayMaxAmmoSound();
 
 		Ammo::Instance()->MaxAmmo();
 		Hud::Instance()->UpdateAmmo();
@@ -32,6 +34,8 @@ public:
 		if (otherCollider->GetTag() != "Player")
 			return;
 
+		GameManager::Instance()->PlayNukeSound();
+
 		ZombieManager::Instance()->Nuke();
 		GameManager::Instance()->AddPlayerScore(500);
 
@@ -50,6 +54,10 @@ public:
 		if (otherCollider->GetTag() != "Player")
 			return;
 
+		Hud::Instance()->SetInstaKillActive(true);
+
+		GameManager::Instance()->PlayInstaKillSound();
+
 		ZombieManager::Instance()->ActivateInstaKill();
 
 		thisCollider->RemoveAllComponents();
@@ -67,6 +75,10 @@ public:
 	{
 		if (otherCollider->GetTag() != "Player")
 			return;
+
+		Hud::Instance()->SetDoublePointsActive(true);
+
+		GameManager::Instance()->PlayDoublePointsSound();
 
 		GameManager::Instance()->ActivateDoublePoints();
 

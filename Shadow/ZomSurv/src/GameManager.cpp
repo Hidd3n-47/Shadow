@@ -44,6 +44,11 @@ void GameManager::InitGame(Shadow::Scene* pScene)
 	m_pDeathState = new DeathState(win, cam);
 	m_pMainMenuState->OnStateEnter();
 	m_pCurrentState = m_pMainMenuState;
+
+	m_maxAmmoAudio = Shadow::Audio::Instance()->LoadSound("Assets/Pickups/maxAmmo.mp3", 20);
+	m_nukeAudio = Shadow::Audio::Instance()->LoadSound("Assets/Pickups/nuke.mp3", 20);
+	m_instaKillAudio = Shadow::Audio::Instance()->LoadSound("Assets/Pickups/instaKill.mp3", 20);
+	m_doublePointsAudio = Shadow::Audio::Instance()->LoadSound("Assets/Pickups/doublePoints.mp3", 20);
 }
 
 void GameManager::Update()
@@ -61,6 +66,7 @@ void GameManager::Update()
 
 	m_doublePointsTimer = DOUBLE_POINTS_TIMER_DEFAULT;
 	m_scoreMultiplier = 1.0f;
+	Hud::Instance()->SetDoublePointsActive(false);
 }
 
 void GameManager::DestroyGame()

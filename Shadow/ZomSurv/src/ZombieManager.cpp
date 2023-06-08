@@ -40,6 +40,7 @@ void ZombieManager::Update(const glm::vec3& playerPosition)
 
 	m_instaKillTimer = INSTA_KILL_TIMER_DEFAULT;
 	m_damageMultiplier = 1.0f;
+	Hud::Instance()->SetInstaKillActive(false);
 }
 
 void ZombieManager::SpawnZombie()

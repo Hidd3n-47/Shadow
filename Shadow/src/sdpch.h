@@ -33,6 +33,7 @@ const Color BG_COLOR = Color(200, 200, 200, 255);
 
 // Defines.
 #define TILE_WIDTH 32
+#define PI 3.14159265358979323846264338327950288
 
 // Macros.
 #define DLOG(...) Log::Instance()->DebugLog(__VA_ARGS__);
