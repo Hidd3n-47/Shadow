@@ -2,6 +2,7 @@
 #include "GameManager.h"
 
 #include "Time/Time.h"
+#include "Engine/Engine.h"
 #include "GameObject/GameObject.h"
 #include "Component/CircleCollider2D.h"
 #include "Component/SpriteRenderer.h"
@@ -55,6 +56,10 @@ void GameManager::Update()
 {
 	m_pCurrentState->Update();
 
+	// If the state is not the playing state, no need to update double points.
+	if (m_pCurrentState != m_pPlayingState)
+		return;
+
 	if (m_doublePointsTimer == DOUBLE_POINTS_TIMER_DEFAULT)
 		return;
 
@@ -94,7 +99,7 @@ void GameManager::ChangeSceneState(GameSceneState state)
 		m_pCurrentState = m_pDeathState;
 		break;
 	case GameSceneState::QUIT:
-		// TODO implement.
+		Shadow::Engine::Instance()->StopRunning();
 		break;
 	default:
 		Shadow::Log::Instance()->Warning("Unprocessed state in the Game Manger NextState method.");

@@ -1,10 +1,13 @@
 #include "sdpch.h"
 #include "PlayingState.h"
 
+#include "ParticleSystem/ParticleManager.h"
+#include "Component/Animation.h"
 #include "Input/InputManager.h"
 #include "Time/Time.h"
 
 #include "ZomSurv/src/GameStates/GameStateManager.h"
+#include "ZomSurv/Weapons/GunManager.h"
 #include "ZomSurv/Weapons/Bullet/BulletManager.h"
 #include "ZomSurv/src/ZombieManager.h"
 #include "ZomSurv/PickUp/PickUpManager.h"
@@ -37,11 +40,13 @@ void PlayingState::Update()
 
 	BulletManager::Instance()->Update();
 
+
 	UpdateZombies();
 
 	GameStateManager::Instance()->Update();
 
 	PickUpManager::Instance()->Update();
+	GunManager::Instance()->Update();
 
 	AfterUpdate();
 }
@@ -58,6 +63,8 @@ void PlayingState::OnStateExit()
 	delete m_pPlayer;
 
 	Hud::Instance()->Destroy();
+
+	Shadow::ParticleManager::Instance()->DestroyParticleEffects();
 }
 
 void PlayingState::AddZombieToHitCooldown(Shadow::GameObject* pZombie)

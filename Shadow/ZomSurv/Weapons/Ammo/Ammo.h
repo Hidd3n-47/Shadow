@@ -12,6 +12,8 @@ public:
 	void ReduceAmmo(AmmoType ammoType, unsigned short amount);
 	void MaxAmmo();
 
+	bool IsMaxAmmo();
+
 	// Accessors.
 	unsigned short GetAmmo(AmmoType ammoType) { return m_ammoCount[ammoType]; }
 

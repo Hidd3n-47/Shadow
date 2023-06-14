@@ -30,6 +30,7 @@ public:
 	inline bool PlayerPurchase(unsigned int cost) { return m_pPlayer->PurchaseItem(cost); }
 	inline unsigned int GetPlayerScore() const { return m_pPlayer->GetScore(); }
 	inline glm::vec3 GetPlayerPosition() const { return m_pPlayer->GetPosition(); }
+	inline float GetPlayerRotation() const { return m_pPlayer->GetRotation(); }
 	inline void AddPlayerScore(unsigned int score) { m_pPlayer->AddScore(score); }
 	inline void SetPlayerStartingPos(const glm::vec3& position) { m_playerStartingPosition = position; }
 	inline void PurchaseJug() { m_pPlayer->ApplyJugPerk(); }

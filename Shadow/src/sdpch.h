@@ -39,8 +39,6 @@ const Color BG_COLOR = Color(200, 200, 200, 255);
 #define DLOG(...) Log::Instance()->DebugLog(__VA_ARGS__);
 
 
-//Log::Instance()->DebugLog("x: " + std::to_string(p.x) + " | y: " + std::to_string(p.y) + " | z: " + std::to_string(p.z));
-
 //void* operator new(size_t size)
 //{
 //	Shadow::DLOG("Allocated " + std::to_string(size) + " bytes of memory.");

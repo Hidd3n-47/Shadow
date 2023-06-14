@@ -14,7 +14,7 @@ Hud::Hud()
 
 void Hud::Init(uint8_t wave, unsigned int score)
 {
-	m_waveFont = Shadow::FontManager::Instance()->CreateFont("Assets/Fonts/Louis George Cafe Bold.ttf", WAVE_FONT_SIZE, std::to_string(wave), Color(White), WAVE_POS);
+	m_waveFont = Shadow::FontManager::Instance()->CreateFont("Assets/Fonts/Louis George Cafe Bold.ttf", WAVE_FONT_SIZE, std::to_string(wave), Color(Red), WAVE_POS);
 	m_playerScoreFont = Shadow::FontManager::Instance()->CreateFont("Assets/Fonts/Louis George Cafe Bold.ttf", SCORE_FONT_SIZE, std::to_string(score), Color(Red), SCORE_POS);
 	m_reloadPrompt = Shadow::FontManager::Instance()->CreateFont("Assets/Fonts/Louis George Cafe Bold.ttf", RELOAD_FONT_SIZE, "Press 'R' to reload", Color(Black), glm::vec2(-100.0f));
 	m_reloading = Shadow::FontManager::Instance()->CreateFont("Assets/Fonts/Louis George Cafe Bold.ttf", RELOAD_FONT_SIZE, "Reloading", Color(Black), glm::vec2(-100.0f));
@@ -115,13 +115,11 @@ void Hud::UpdateAmmo()
 
 void Hud::UpdateHealthBar(float health, float maxHealth)
 {
-	const glm::vec2 healthBarDims = { 160.0f, 50.0f };
-
 	float percent = health / maxHealth;
 
-	int width = (int)(healthBarDims.x * percent);
+	int width = (int)(HEALTH_BAR_DIMENTIONS.x * percent);
 
-	m_pHealthSpriteRenderer->SetDimensions({ width, healthBarDims.y });
+	m_pHealthSpriteRenderer->SetDimensions({ width, HEALTH_BAR_DIMENTIONS.y });
 }
 
 void Hud::DisplayReloadingUpdate(uint16_t fontId, bool display, const glm::vec2& offset)

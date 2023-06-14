@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Component\Animation.cpp" />
     <ClCompile Include="ParticleSystem\ParticleEffect.cpp" />
     <ClCompile Include="ParticleSystem\Particle.cpp" />
     <ClCompile Include="ParticleSystem\ParticleManager.cpp" />
@@ -27,6 +28,7 @@
     <ClCompile Include="Audio\Audio.cpp" />
     <ClCompile Include="ZomSurv\AI\NavMesh.cpp" />
     <ClCompile Include="ZomSurv\Level\PerkMachineTrigger.cpp" />
+    <ClCompile Include="ZomSurv\Level\PowerTrigger.cpp" />
     <ClCompile Include="ZomSurv\PickUp\IPickUp.cpp" />
     <ClCompile Include="ZomSurv\PickUp\PickUpManager.cpp" />
     <ClCompile Include="ZomSurv\Weapons\Bullet\BulletCollision.cpp" />
@@ -83,6 +85,7 @@
     <ClCompile Include="ZomSurv\Weapons\GunManager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Component\Animation.h" />
     <ClInclude Include="ParticleSystem\ParticleEffect.h" />
     <ClInclude Include="ParticleSystem\Particle.h" />
     <ClInclude Include="ParticleSystem\ParticleManager.h" />
@@ -93,6 +96,7 @@
     <ClInclude Include="Audio\Audio.h" />
     <ClInclude Include="Audio\SoundEffect.h" />
     <ClInclude Include="ZomSurv\Level\PerkMachineTrigger.h" />
+    <ClInclude Include="ZomSurv\Level\PowerTrigger.h" />
     <ClInclude Include="ZomSurv\PickUp\PickupTriggers.h" />
     <ClInclude Include="ZomSurv\PickUp\PickUpManager.h" />
     <ClInclude Include="ZomSurv\PickUp\IPickUp.h" />

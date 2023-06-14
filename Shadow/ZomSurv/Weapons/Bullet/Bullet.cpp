@@ -13,11 +13,13 @@ Bullet::Bullet(Shadow::Scene* pScene, const glm::vec2& pos, const glm::vec2& dir
 	m_direction({dir.x, dir.y, 0.0f}),
 	m_damage(dam)
 {
+	const float RADIUS = 11;
+
 	m_pGameObject = m_pScene->CreateEmptyGameObject("Bullet");
 	m_pGameObject->SetTag("Bullet");
 
-	Shadow::CircleCollider2D* cc = new Shadow::CircleCollider2D(m_pGameObject, 5.0f);
-	Shadow::SpriteRenderer* sr = new Shadow::SpriteRenderer(m_pGameObject, "Assets/Weapons/bullet.png");
+	Shadow::CircleCollider2D* cc = new Shadow::CircleCollider2D(m_pGameObject, RADIUS * 0.5f);
+	Shadow::SpriteRenderer* sr = new Shadow::SpriteRenderer(m_pGameObject, "Assets/Weapons/bullet.png", glm::vec2(RADIUS));
 	cc->SetCollisionMethods(new BulletCollision());
 
 	m_pGameObject->AddComponent(cc);

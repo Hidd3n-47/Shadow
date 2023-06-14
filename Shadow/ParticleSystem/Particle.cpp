@@ -19,7 +19,7 @@ void Particle::Update()
 {
 	m_position += m_direction * m_velocity * Time::Instance()->GetDeltaTime();
 
-	m_velocity = m_velocity < m_friction ? 0.0f : m_velocity - m_friction;
+	m_velocity = m_velocity < m_friction ? 0.0f : m_velocity - m_friction * Time::Instance()->GetDeltaTime();
 }
 
 SHADOW_NAMESPACE_END

@@ -25,7 +25,7 @@ private:
 
 	Shadow::Scene* m_pScene = nullptr;
 	int m_textureId = -1;
-	float m_bulletVelocity = 12000.0f;
+	float m_bulletVelocity = 5000.0f;
 
 	std::vector<Bullet*> m_bullets;
 

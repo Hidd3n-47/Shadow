@@ -49,6 +49,7 @@ void Engine::Run()
 {
 	while (m_running)
 	{
+		Time::Instance()->Tick();
 		//Time::Instance()->StartTick();
 		InputManager::Instance()->Listen();
 		Update();
@@ -56,7 +57,6 @@ void Engine::Run()
 		Render();
 		//Time::Instance()->EndTick();
 
-		Time::Instance()->Tick();
 	}
 }
 

@@ -6,11 +6,9 @@
 
 enum class ZombieType
 {
-	/*WALKER,
-	RUNNER,
-	CRAWLER,
-	HOUND*/ // These are the types I could look at adding TODO.
-	WALKER
+	WALKER,
+	SPRINTER,
+	count // Used to represent the number of Zombie Types.
 };
 
 class IZombie : public IEntity

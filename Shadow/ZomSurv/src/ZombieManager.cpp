@@ -2,6 +2,7 @@
 #include "ZombieManager.h"
 
 #include "Time/Time.h"
+#include "Random/Random.h"
 #include "Scene/SceneManager.h"
 #include "Graphics/TextureManager.h"
 
@@ -51,7 +52,10 @@ void ZombieManager::SpawnZombie()
 
 	unsigned int x = GameManager::Instance()->GetWave();
 	unsigned int health = -maxZomHealth / (4 * pow(maxWaves, 3)) * pow(x, 3) + 3 * maxZomHealth / (4 * pow(maxWaves, 2)) * pow(x, 2) + zombieStartinHealth;
-	m_zombies.push_back(new IZombie(m_pScene, RoomManager::Instance()->GetRandomSpawnLocation(), health, m_textureId));
+
+	int zombieType = Shadow::Random::GetRandomIntBetween(0, (int)(ZombieType::count));
+
+	m_zombies.push_back(new IZombie(m_pScene, RoomManager::Instance()->GetRandomSpawnLocation(), health, m_textureId, (ZombieType)zombieType));
 
 	m_numZombies++;
 }

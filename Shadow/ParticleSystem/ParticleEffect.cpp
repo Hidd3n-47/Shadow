@@ -15,20 +15,21 @@ ParticleEffect::ParticleEffect(Scene* pScene, const std::string& spriteFilePath,
 	m_textureDimensions(spriteDimensions),
 	m_position(position),
 	m_maxLifeSpan(lifeTime),
-	m_lifeTime(lifeTime)
+	m_lifeTime(lifeTime),
+	m_numParticles(numParticles)
 {
 	m_textureId = TextureManager::Instance()->Load(spriteFilePath, pScene->GetWindow()->GetRenderer(), spriteDimensions.x, spriteDimensions.y);
 
-	const short RAND_ANGLE_OFFSET = 3;
-	const float VELOCITY_PERCENT_OFFSET = 0.1f;
-	const short SCALE_BOUND_X = 75;
-	const short SCALE_BOUND_Y = 175;
+	const short RAND_ANGLE_OFFSET = 20;
+	const float VELOCITY_PERCENT_OFFSET = 0.05f;
+	const short SCALE_BOUND_LOWER = 75;
+	const short SCALE_BOUND_UPPER = 150;
 
 	for (int i = 0; i < numParticles; i++)
 	{
 		glm::vec2 dir(1.0f);
 		float randAngle = Random::GetRandomIntBetween(-RAND_ANGLE_OFFSET, RAND_ANGLE_OFFSET);
-		float angle = glm::angle(direction, glm::vec2(1.0f, 0.0f)) + randAngle / (2 * PI);
+		float angle = glm::angle(direction, glm::vec2(1.0f, 0.0f)) + randAngle / 180 * (1 * PI);
 
 		dir.x *= glm::cos(angle);
 		dir.y *= glm::sin(angle);
@@ -36,7 +37,7 @@ ParticleEffect::ParticleEffect(Scene* pScene, const std::string& spriteFilePath,
 		float velocityOffset = VELOCITY_PERCENT_OFFSET * velocity;
 		float v = Random::GetRandomIntBetween(velocity - velocityOffset, velocity + velocityOffset);
 
-		float scale = Random::GetRandomIntBetween(SCALE_BOUND_X, SCALE_BOUND_Y) / 100.0f;
+		float scale = Random::GetRandomIntBetween(SCALE_BOUND_LOWER, SCALE_BOUND_UPPER) / 100.0f;
 
 		m_particles.push_back(new Particle(m_position, dir, glm::vec2(scale), v, friction));
 	}

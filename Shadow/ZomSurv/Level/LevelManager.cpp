@@ -45,11 +45,6 @@ void LevelManager::UnloadMap()
 	m_mapLoaded = false;
 }
 
-void LevelManager::AddPerkMachineTrigger(Shadow::Scene* pScene, int perkId, const glm::vec2& worldPosition)
-{
-	m_perkTriggers[perkId].push_back(new PerkMachineTrigger(pScene, perkId, worldPosition));
-}
-
 void LevelManager::BuyPerk(int perkId)
 {
 	if (!GameManager::Instance()->PlayerPurchase(PERK_COST))
@@ -86,4 +81,12 @@ void LevelManager::BuyPerk(int perkId)
 		delete m_perkTriggers[perkId][i];
 
 	m_perkTriggers[perkId].clear();
+}
+
+void LevelManager::DeletePowerTriggers()
+{
+	for (int i = 0; i < m_powerTriggers.size(); i++)
+		delete m_powerTriggers[i];
+
+	m_powerTriggers.clear();
 }

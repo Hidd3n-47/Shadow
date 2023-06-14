@@ -7,6 +7,8 @@
 #include "FileIO/IOManager.h"
 #include "Component/BoxCollider2D.h"
 #include "Component/SpriteRenderer.h"
+#include "Graphics/TextureManager.h"
+
 #include "ZomSurv/src/GameManager.h"
 #include "ZomSurv/Level/Room/RoomManager.h"
 #include "ZomSurv/Level/LevelManager.h"
@@ -14,6 +16,7 @@
 LevelParser* LevelParser::m_pInstance = nullptr;
 
 int LevelParser::m_wallId		= -1;
+int LevelParser::m_powerWallId	= -1;
 int LevelParser::m_spawnerId	= -1;
 int LevelParser::m_quickRevId	= -1;
 int LevelParser::m_doubleTapId	= -1;
@@ -93,14 +96,13 @@ void LevelParser::TileHandler(LevelData* pLevelData, int tileID, int x, int y, S
 {
 	pLevelData->mapTiles[tileID].push_back(glm::vec2(x, y));
 
-	Shadow::GameObject* go = nullptr;
-	Shadow::BoxCollider2D* box = nullptr;
-	Shadow::SpriteRenderer* sr = nullptr;
-
 	switch (tileID)
 	{
 	case -5: // Air
-	case -1: // Floor: could be changed to change the texture of the flooring.
+	case -1: // Floor
+		break;
+	case -3:
+		CreateSolidWallGameObject("Power", "Assets/Environment/powerWall.png", { x * TILE_WIDTH, y * TILE_WIDTH }, pScene, m_powerWallId);
 		break;
 	case -2: // Player.
 		GameManager::Instance()->SetPlayerStartingPos(glm::vec2(x * TILE_WIDTH, y * TILE_WIDTH));
@@ -206,6 +208,9 @@ void LevelParser::EnvironmentHandler(LevelData* pLevelData, int value, int x, in
 {
 	if (value == -1)
 		return;
+
+	if (value == -2)
+		LevelManager::Instance()->AddPowerTrigger(GameManager::Instance()->GetGameScene(), glm::vec2(x * TILE_WIDTH, y * TILE_WIDTH));
 
 	// Zombie Spawners.
 	if (value < 100)

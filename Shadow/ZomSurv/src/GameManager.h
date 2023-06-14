@@ -54,12 +54,17 @@ public:
 	inline Shadow::Scene* GetScene() const { return m_pGameScene; }
 	inline unsigned int GetPlayerScore() const { return m_pPlayingState->GetPlayerScore(); }
 	inline glm::vec3 GetPlayerPosition() const { return m_pPlayingState->GetPlayerPosition(); }
+	inline float GetPlayerRotation() const { return m_pPlayingState->GetPlayerRotation(); }
 	inline Shadow::Scene* GetGameScene() const { return m_pGameScene; }
 	inline Uint16 GetMusicId() const { return m_musicId; }
+	inline bool GetPowerOn() const { return m_powerOn; }
+	inline bool GetQuickRevive() const { return m_quickRevive; }
 
 	// Mutators.
 	inline void SetPlayerStartingPos(const glm::vec2& position) { m_pPlayingState->SetPlayerStartingPos(glm::vec3(position.x, position.y, 0.0f)); }
 	inline void AddPlayerScore(unsigned int score) { m_pPlayingState->AddPlayerScore(m_scoreMultiplier * score); }
+	inline void ActivateQuickRevive() { m_quickRevive = true; }
+	inline void TurnPowerOn() { m_powerOn = true; }
 private:
 	GameManager();
 	~GameManager();
@@ -83,7 +88,9 @@ private:
 	short m_scoreMultiplier = 1.0f;
 	float m_doublePointsTimer = DOUBLE_POINTS_TIMER_DEFAULT;
 	
+	bool m_powerOn = false;
 	bool m_speedCola = false;
+	bool m_quickRevive = false;
 
 	Uint16 m_musicId = 0;
 

@@ -1,9 +1,12 @@
 #include "sdpch.h"
 #include "IZombie.h"
 
+#include <glm/gtx/vector_angle.hpp>
+
 #include "Time/Time.h"
 #include "Component/IComponent.h"
 #include "Component/SpriteRenderer.h"
+#include "Component/Animation.h"
 #include "Component/CircleCollider2D.h"
 
 #include "ZombieCollision.h"
@@ -35,6 +38,18 @@ void IZombie::Update(const glm::vec3& playerPosition)
 	glm::vec3 direction = glm::normalize(playerPosition - *m_position);
 
 	*m_position += direction * m_speed * Shadow::Time::Instance()->GetDeltaTime();
+
+	float angle = glm::angle(glm::vec2(direction), glm::vec2(1.0f, 0.0f)) / PI * 180.0f;
+
+	if (direction.y < 0)
+		angle = 450 - angle;
+	else
+		angle += 90;
+
+	if (angle > 360)
+		angle -= 360;
+
+	m_gameObject->GetTransform()->rotation.z = angle;
 }
 
 bool IZombie::Damage(uint16_t damage)
@@ -67,7 +82,7 @@ void IZombie::CreateGameObject(Shadow::Scene* pScene)
 
 void IZombie::InitZombieByType(uint16_t textureId)
 {
-	Shadow::SpriteRenderer* sr = nullptr;
+	Shadow::Animation* a = nullptr;
 
 	switch (m_type)
 	{
@@ -75,12 +90,17 @@ void IZombie::InitZombieByType(uint16_t textureId)
 		Shadow::Log::Instance()->Warning("Zombie type passed in that is not set.");
 
 	case ZombieType::WALKER:
-		InitZombie(50, 200.0f);
-		sr = new Shadow::SpriteRenderer(m_gameObject, textureId);
+		InitZombie(50, 50.0f);
+		a = new Shadow::Animation(m_gameObject, "Assets/zombieAnimation.png", 7, glm::vec2(32.0f), 0.075f);
+		break;
+	case ZombieType::SPRINTER:
+		InitZombie(50, 100.0f);
+		a = new Shadow::Animation(m_gameObject, "Assets/zombieAnimation.png", 7, glm::vec2(32.0f), 0.075f);
 		break;
 	}
 
-	m_gameObject->AddComponent(sr);
+	//m_gameObject->AddComponent(sr);
+	m_gameObject->AddComponent(a);
 }
 
 void IZombie::InitZombie(uint8_t damage, float speed)

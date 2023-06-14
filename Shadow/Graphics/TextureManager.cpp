@@ -36,7 +36,7 @@ uint16_t TextureManager::Load(std::string filePath, SDL_Renderer* pRenderer, int
 	return m_id++;
 }
 
-void TextureManager::RenderSingle(Camera* pCamera, SDL_Renderer* pRenderer, uint16_t id, glm::vec2 world, glm::vec2 scale, const glm::vec2& dimensions, int sheetX, int sheetY, SDL_RendererFlip flip)
+void TextureManager::RenderSingle(Camera* pCamera, SDL_Renderer* pRenderer, uint16_t id, glm::vec2 world, glm::vec2 scale, const glm::vec2& dimensions, int sheetX, float angle, SDL_RendererFlip flip)
 {
 	glm::vec3 camPosition = pCamera->GetPosition();
 	float width, height;
@@ -52,18 +52,18 @@ void TextureManager::RenderSingle(Camera* pCamera, SDL_Renderer* pRenderer, uint
 
 	if (dimensions == glm::vec2(-1.0f))
 	{
-		srcRect = { sheetX, sheetY, TILE_WIDTH, TILE_WIDTH };
+		srcRect = { sheetX, 0, TILE_WIDTH, TILE_WIDTH };
 		SDL_Rect r = { floor(world.x - camPosition.x + width * 0.5f), floor(world.y - camPosition.y + height * 0.5f), TILE_WIDTH * scale.x, TILE_WIDTH * scale.y };
 		destRect = r;
 	}
 	else
 	{
-		srcRect = { sheetX, sheetY, (int)dimensions.x, (int)dimensions.y };
+		srcRect = { sheetX, 0, (int)dimensions.x, (int)dimensions.y };
 		SDL_Rect r = { floor(world.x - camPosition.x + width * 0.5f), floor(world.y - camPosition.y + height * 0.5f), dimensions.x * scale.x, dimensions.y * scale.y };
 		destRect = r;
 	}
 
-	int err = SDL_RenderCopyEx(pRenderer, m_textureMap[id], &srcRect, &destRect, 0, nullptr, flip);
+	int err = SDL_RenderCopyEx(pRenderer, m_textureMap[id], &srcRect, &destRect, angle, nullptr, flip);
 
 	if (err < 0)
 		Log::Instance()->CriticalError("Failed to render texture with ID " + std::to_string(id) +
@@ -104,11 +104,6 @@ void TextureManager::RemoveAllTextures()
 		SDL_DestroyTexture(it->second);
 
 	m_textureMap.clear();
-}
-
-void TextureManager::Destroy()
-{
-	//Empty.
 }
 
 SHADOW_NAMESPACE_END

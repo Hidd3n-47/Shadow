@@ -37,13 +37,24 @@ void PerkMachineTrigger::OnTriggerEnter(Shadow::GameObject* thisCollider, Shadow
 	if (otherCollider->GetName() != "Player")
 		return;
 
+	std::string prompt;
+
+	if (!GameManager::Instance()->GetPowerOn())
+		prompt = "You need to turn the power on.";
+	else
+	{
+		prompt = "Press 'E' to purchase " + m_perkName + " [Cost: " + std::to_string(PERK_COST) + "]";
+		m_power = true;
+	}
+
+
 	glm::vec2 playerPosition = GameManager::Instance()->GetPlayerPosition();
 	Shadow::Camera* camera = GameManager::Instance()->GetScene()->GetCamera();
 	float width, height;
 	camera->GetWidthAndHeight(width, height);
 	glm::vec2 cameraPosition = camera->GetPosition();
 	glm::vec2 position = glm::vec2(floor(playerPosition.x + 32 + width * 0.5f), floor(playerPosition.y - 16 + height * 0.5f)) - cameraPosition;
-	m_popupId = Shadow::FontManager::Instance()->CreateFont("Assets/Fonts/Louis George Cafe Bold.ttf", 18, "Press 'E' to purchase " + m_perkName + " [Cost: " + std::to_string(PERK_COST) + "]", Color(Black), position);
+	m_popupId = Shadow::FontManager::Instance()->CreateFont("Assets/Fonts/Louis George Cafe Bold.ttf", 18, prompt, Color(Black), position);
 }
 
 void PerkMachineTrigger::OnTriggerStay(Shadow::GameObject* thisCollider, Shadow::GameObject* otherCollider)
@@ -63,7 +74,7 @@ void PerkMachineTrigger::OnTriggerStay(Shadow::GameObject* thisCollider, Shadow:
 		Shadow::FontManager::Instance()->UpdateFont(m_popupId, position);
 	}
 
-	if (Shadow::InputManager::Instance()->IsKeyDown(Shadow::KEYCODE_e))
+	if (Shadow::InputManager::Instance()->IsKeyDown(Shadow::KEYCODE_e) && m_power)
 		BuyPerk();
 }
 

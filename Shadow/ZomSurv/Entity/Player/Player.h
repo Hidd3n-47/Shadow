@@ -2,6 +2,7 @@
 
 #include "Scene/Scene.h"
 #include "Graphics/FontManager.h"
+#include "Component/Animation.h"
 
 #include "ZomSurv/Entity/IEntity.h"
 #include "ZomSurv/Weapons/Gun.h"
@@ -12,6 +13,12 @@ enum class PlayerState
 {
 	PLAYING,
 	RELOADING
+};
+
+enum class PlayerMovingState
+{
+	MOVING,
+	STANDING
 };
 
 class Player : public IEntity
@@ -38,6 +45,7 @@ public:
 	inline unsigned short GetAmmoInClip() const { return m_pGun[m_gunIndex]->GetNumInClip(); }
 	inline unsigned short GetAmmoForType() const { return Ammo::Instance()->GetAmmo(m_pGun[m_gunIndex]->GetAmmoType()); }
 	inline PlayerState GetState() const { return m_state; }
+	inline float GetRotation() const { return *m_pRotation; }
 
 	// Mutators.
 	inline void SetPosition(const glm::vec3& position) { *m_position = position; }
@@ -46,8 +54,12 @@ public:
 	inline void SetState(PlayerState state) { m_state = state; }
 private:
 	Shadow::Scene* m_pScene = nullptr;
+	Shadow::Animation* m_pAnimationComponent = nullptr;
+
+	float* m_pRotation = nullptr;
 
 	PlayerState m_state = PlayerState::PLAYING;
+	PlayerMovingState m_movingState = PlayerMovingState::STANDING;
 	float m_maxHealth = 150.0f;
 	unsigned int m_score;
 	const float HEALTH_REGEN_DELAY = 2.0f;
@@ -58,7 +70,12 @@ private:
 	bool m_gunIndex = 0;
 	Gun* m_pGun[2] = { nullptr, nullptr };
 
+	float m_halfWidth, m_halfHeight;
+
 	void CreateGameObject(Shadow::Scene* pScene);
+	void UpdateMovingState(const glm::vec3& moveDirection);
+	void UpdateRotation();
+	void UpdateRegenTimer(float dt);
 	void ReloadUpdate();
 };
 

@@ -10,6 +10,7 @@
 
 #include "ZomSurv/src/GameManager.h"
 #include "Bullet/BulletManager.h"
+#include "GunManager.h"
 
 Gun::Gun(const std::string& name, bool automatic, float damage, float fireRate, AmmoType ammoType, unsigned short clipSize, float timeToReload) :
 	m_name(name),
@@ -23,7 +24,6 @@ Gun::Gun(const std::string& name, bool automatic, float damage, float fireRate, 
 	m_reloadTimer(m_timeToReload),
 	m_textureId(-1)
 {
-	//m_textureId = TextureManager::Instance()->load("", 1, 1);
 	ReloadSuccessful();
 
 	Shadow::SceneManager::Instance()->GetActiveScene()->GetCamera()->GetWidthAndHeight(m_halfWidth, m_halfHeight);
@@ -43,6 +43,8 @@ Gun::~Gun()
 
 void Gun::Shoot()
 {
+	const float BULLET_DISTANCE_FROM_CENTER = 18;
+
 	if (m_shot)
 	{
 		m_timer += Shadow::Time::Instance()->TimerStop() / 1000.0f;
@@ -56,6 +58,9 @@ void Gun::Shoot()
 
 	m_sound->Play();
 
+	short directionMultiplierX = 1;
+	short directionMultiplierY = -1;
+
 	glm::vec2 playerPosition = GameManager::Instance()->GetPlayerPosition();
 
 	glm::vec2 mouseCoords = Shadow::InputManager::Instance()->GetMousePosition();
@@ -65,10 +70,18 @@ void Gun::Shoot()
 
 	if (dir.y < 0)
 		angle = 2 * PI - angle;
+	else
+		directionMultiplierY = 0;
 
-	glm::vec2 bulletPos = { playerPosition.x + 35 * cos(angle), playerPosition.y + 35 * sin(angle) };
+	if (dir.x < 0)
+		directionMultiplierX = -1;
+	
+	glm::vec2 bulletPos = { playerPosition.x + TILE_WIDTH * 0.5f + BULLET_DISTANCE_FROM_CENTER * cos(angle) + directionMultiplierX * 5.5f, 
+								playerPosition.y + TILE_WIDTH * 0.5f + BULLET_DISTANCE_FROM_CENTER * sin(angle) + directionMultiplierY * 5.5f };
 
 	BulletManager::Instance()->CreateBullet(bulletPos, dir, m_damage);
+
+	GunManager::Instance()->Render();
 
 	m_numInClip--;
 	m_timer = 0.0f;
@@ -120,8 +133,7 @@ void Gun::CancelReload()
 
 void Gun::Update()
 {
-	// update the pistol position and direction. 
-	// Might need to pass in the player position and direction of mouse to shoot.
+	// Empty.
 }
 
 void Gun::ReloadSuccessful()

@@ -36,12 +36,13 @@ void Time::EndTick()
 
 void Time::Tick()
 {
-	m_deltaTime = (SDL_GetTicks() - m_lastTime) / 1000.0f;
+	Uint32 now = SDL_GetTicks();
+	m_deltaTime = (now - m_lastTime) / 1000.0f;
 
-	if (m_targetFrameTime > m_deltaTime)
-		SDL_Delay((m_targetFrameTime - m_deltaTime) * 1000.0f);
+	/*if (m_targetFrameTime > m_deltaTime)
+		SDL_Delay((m_targetFrameTime - m_deltaTime) * 1000.0f);*/
 
-	m_lastTime = SDL_GetTicks();
+	m_lastTime = now;
 }
 
 SHADOW_NAMESPACE_END

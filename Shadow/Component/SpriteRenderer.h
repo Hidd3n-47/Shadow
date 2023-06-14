@@ -27,11 +27,11 @@ public:
 	inline void SetDimensions(const glm::vec2& dims) { m_dimensions = dims; }
 private:
 	GameObject* m_pOwner = nullptr;
-	std::string m_filePath = "";
+
 	uint16_t m_textureId = 0;
 	bool m_loadTexture = true;
 	bool m_staticSprite = false;
-	glm::vec2 m_dimensions = glm::vec2(0.0f);
+	glm::vec2 m_dimensions = glm::vec2(TILE_WIDTH);
 	glm::vec2 m_screenPosition = glm::vec2(0.0f);
 };
 

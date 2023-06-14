@@ -46,9 +46,18 @@ void ParticleManager::Render()
 
 void ParticleManager::DestroyParticleEffect(uint16_t id)
 {
+	m_numParticlesAlive -= m_particleEffects[id]->GetNumParticles();
 	delete m_particleEffects[id];
 
 	m_particleEffects.erase(id);
+}
+
+void ParticleManager::DestroyParticleEffects()
+{
+	for (auto it = m_particleEffects.begin(); it != m_particleEffects.end(); ++it)
+		delete it->second;
+
+	m_particleEffects.clear();
 }
 
 short ParticleManager::NumParticlesFree(short desiredNumParticles)

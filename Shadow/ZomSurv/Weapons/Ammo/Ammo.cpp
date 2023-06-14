@@ -63,3 +63,20 @@ void Ammo::MaxAmmo()
 	m_ammoCount[AmmoType::HEAVY]	= MAX_HEAVY;
 	m_ammoCount[AmmoType::SPECIAL]	= MAX_SPECIAL;
 }
+
+bool Ammo::IsMaxAmmo()
+{
+	if (m_ammoCount[AmmoType::LIGHT] != MAX_LIGHT)
+		return false;
+
+	if (m_ammoCount[AmmoType::MEDIUM] != MAX_MEDIUM)
+		return false;
+
+	if (m_ammoCount[AmmoType::HEAVY] != MAX_HEAVY)
+		return false;
+
+	if (m_ammoCount[AmmoType::SPECIAL] != MAX_SPECIAL)
+		return false;
+
+	return true;
+}

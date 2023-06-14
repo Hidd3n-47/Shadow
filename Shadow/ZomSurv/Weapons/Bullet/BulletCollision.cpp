@@ -18,12 +18,13 @@ void BulletCollision::OnCollisionEnter(Shadow::GameObject* thisGameObject, Shado
 		return;
 
 	GameManager::Instance()->AddPlayerScore(10);
-	//glm::vec3 bulletPos = otherGameObject->GetTransform()->position + glm::vec3(TILE_WIDTH * 0.5f);
+	
 	glm::vec3 bulletPos = GameManager::Instance()->GetPlayerPosition();
 
 	ZombieManager::Instance()->DamageZombie(otherGameObject, damage);
-	glm::vec2 dir = thisGameObject->GetTransform()->position - bulletPos;
+	glm::vec2 dir = thisGameObject->GetTransform()->position - bulletPos + glm::vec3(21.5f, 21.5f, 0.0f);;
 	glm::normalize(dir);
 
-	Shadow::ParticleManager::Instance()->CreateParticleEffect(Shadow::SceneManager::Instance()->GetActiveScene(), "Assets/blood.png", glm::vec2(11), thisGameObject->GetTransform()->position, dir, 700, 7.5f, 5, 10);
+	Shadow::ParticleManager::Instance()->CreateParticleEffect(Shadow::SceneManager::Instance()->GetActiveScene(), "Assets/blood.png", glm::vec2(11), 
+		thisGameObject->GetTransform()->position, dir, 1000, 1000.0f, 5, 10);
 }

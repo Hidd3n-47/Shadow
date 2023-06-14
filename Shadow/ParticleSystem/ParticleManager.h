@@ -16,6 +16,7 @@ public:
 	void Render();
 
 	void DestroyParticleEffect(uint16_t id);
+	void DestroyParticleEffects();
 
 	static const unsigned short MAX_PARTICLES = 1000;
 private:

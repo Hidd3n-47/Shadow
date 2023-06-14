@@ -1,9 +1,11 @@
 #include "sdpch.h"
 #include "Player.h"
 
+#include <glm/gtx/vector_angle.hpp>
+
 #include "Logger/Log.h"
 #include "Time/Time.h"
-#include "Component/SpriteRenderer.h"
+#include "Input/InputManager.h"
 #include "Component/CircleCollider2D.h"
 
 #include "ZomSurv/src/GameManager.h"
@@ -15,20 +17,26 @@ Player::Player(Shadow::Scene* pScene, const glm::vec3& startingPosition) :
 	m_health = m_maxHealth;
 	m_damage = 10;
 	m_position = nullptr;
-	m_speed = 500.0f;
-	m_score = 500;
+	m_speed = 200.0f;
+	m_score = 23500;
 
 	CreateGameObject(pScene);
 	
 	m_position = &m_gameObject->GetTransform()->position;
+	m_pRotation = &m_gameObject->GetTransform()->rotation.z;
 
 	*m_position -= glm::vec3(TILE_WIDTH >> 1);
+
 
 	SetPosition(startingPosition);
 
 	pScene->GetCamera()->SetTargetPosition(*m_position);
 
 	SetGun(GunManager::Instance()->LoadGun("Assets/Weapons/Guns/calt45.gun"));
+
+	Shadow::SceneManager::Instance()->GetActiveScene()->GetCamera()->GetWidthAndHeight(m_halfWidth, m_halfHeight);
+	m_halfWidth *= 0.5f;
+	m_halfHeight *= 0.5f;
 }
 
 Player::~Player()
@@ -46,26 +54,15 @@ void Player::Init()
 
 void Player::Update(const glm::vec3& moveDirection)
 {
+	UpdateMovingState(moveDirection);
+
 	float dt = Shadow::Time::Instance()->GetDeltaTime();
 
-	// Update position.
 	*m_position += moveDirection * m_speed * dt;
 
-	if (m_health < m_maxHealth)
-	{
-		if (m_healthRegenTimer > 0)
-			m_healthRegenTimer -= dt;
-		else
-		{
-			float health = m_health + m_healthRegenPerSecond * dt;
-			m_health = health > m_maxHealth ? m_maxHealth : health;
-			Hud::Instance()->UpdateHealthBar(health, m_maxHealth);
-		}
-	}
-	else
-	{
-		m_healthRegenTimer = HEALTH_REGEN_DELAY;
-	}
+	UpdateRotation();
+
+	UpdateRegenTimer(dt);
 
 	if (m_state == PlayerState::RELOADING)
 		ReloadUpdate();
@@ -111,11 +108,69 @@ void Player::Shoot()
 void Player::CreateGameObject(Shadow::Scene* pScene)
 {
 	m_gameObject = pScene->CreateEmptyGameObject("Player");
+
 	Shadow::CircleCollider2D* circ = new Shadow::CircleCollider2D(m_gameObject, TILE_WIDTH >> 1);
-	Shadow::SpriteRenderer* sr = new Shadow::SpriteRenderer(m_gameObject, "Assets/Entity/player.png");
+	m_pAnimationComponent = new Shadow::Animation(m_gameObject, "Assets/playerAnimation.png", 7, glm::vec2(32.0f), 0.075f);
+
 	m_gameObject->AddComponent(circ);
-	m_gameObject->AddComponent(sr);
+	m_gameObject->AddComponent(m_pAnimationComponent);
+
 	m_gameObject->SetTag("Player");
+}
+
+void Player::UpdateMovingState(const glm::vec3& moveDirection)
+{
+	if (moveDirection != glm::vec3(0.0f))
+		m_movingState = PlayerMovingState::MOVING;
+	else
+		m_movingState = PlayerMovingState::STANDING;
+
+	switch (m_movingState)
+	{
+	case PlayerMovingState::MOVING:
+		m_pAnimationComponent->Resume();
+		break;
+	case PlayerMovingState::STANDING:
+		m_pAnimationComponent->Pause();
+		m_pAnimationComponent->Reset();
+		break;
+	default:
+		Shadow::Log::Instance()->Warning("Unprocessed state in the Player Moving State method.");
+		break;
+	}
+}
+
+void Player::UpdateRotation()
+{
+	glm::vec2 mouseCoords = Shadow::InputManager::Instance()->GetMousePosition();
+	glm::vec2 direction = glm::normalize(mouseCoords - glm::vec2(m_halfWidth + TILE_WIDTH * 0.5f, m_halfHeight + TILE_WIDTH * 0.5f));
+
+	float angle = glm::angle(direction, glm::vec2(1.0f, 0.0f)) / PI * 180.0f;
+
+	if (direction.y < 0)
+		angle = 450 - angle;
+	else
+		angle += 90;
+
+	if (angle > 360)
+		angle -= 360;
+
+	*m_pRotation = angle;
+}
+
+void Player::UpdateRegenTimer(float dt)
+{
+	if (m_health < m_maxHealth)
+		if (m_healthRegenTimer > 0)
+			m_healthRegenTimer -= dt;
+		else
+		{
+			float health = m_health + m_healthRegenPerSecond * dt;
+			m_health = health > m_maxHealth ? m_maxHealth : health;
+			Hud::Instance()->UpdateHealthBar(health, m_maxHealth);
+		}
+	else
+		m_healthRegenTimer = HEALTH_REGEN_DELAY;
 }
 
 void Player::ReloadUpdate()

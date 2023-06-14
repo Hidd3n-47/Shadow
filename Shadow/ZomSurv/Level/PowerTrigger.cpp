@@ -1,16 +1,17 @@
 #include "sdpch.h"
-#include "AmmoTrigger.h"
+#include "PowerTrigger.h"
 
 #include "Input/InputManager.h"
 #include "Graphics/FontManager.h"
 #include "Component/BoxCollider2D.h"
 
 #include "ZomSurv/src/GameManager.h"
+#include "ZomSurv/Level/LevelManager.h"
 
-AmmoTrigger::AmmoTrigger(Shadow::Scene* pScene, const glm::vec2& worldPosition) :
+PowerTrigger::PowerTrigger(Shadow::Scene* pScene, const glm::vec2& worldPosition) :
 	m_pScene(pScene)
 {
-	m_pGameObject = m_pScene->CreateEmptyGameObject("Ammo Station Trigger");
+	m_pGameObject = m_pScene->CreateEmptyGameObject("Power Trigger");
 
 	Shadow::BoxCollider2D* box = new Shadow::BoxCollider2D(m_pGameObject, glm::vec2(TILE_WIDTH >> 1), true);
 	box->SetTriggerFunction(this);
@@ -19,7 +20,7 @@ AmmoTrigger::AmmoTrigger(Shadow::Scene* pScene, const glm::vec2& worldPosition) 
 	m_pGameObject->GetTransform()->position = { worldPosition.x, worldPosition.y, 0.0f };
 }
 
-AmmoTrigger::~AmmoTrigger()
+PowerTrigger::~PowerTrigger()
 {
 	if (m_popupId != -1)
 		Shadow::FontManager::Instance()->DeleteFont(m_popupId);
@@ -27,10 +28,11 @@ AmmoTrigger::~AmmoTrigger()
 	m_pScene->RemoveGameObject(m_pGameObject);
 }
 
-void AmmoTrigger::OnTriggerEnter(Shadow::GameObject* thisCollider, Shadow::GameObject* otherCollider)
+void PowerTrigger::OnTriggerEnter(Shadow::GameObject* thisCollider, Shadow::GameObject* otherCollider)
 {
 	if (otherCollider->GetName() != "Player")
 		return;
+
 
 	glm::vec2 playerPosition = GameManager::Instance()->GetPlayerPosition();
 	Shadow::Camera* camera = GameManager::Instance()->GetScene()->GetCamera();
@@ -38,10 +40,10 @@ void AmmoTrigger::OnTriggerEnter(Shadow::GameObject* thisCollider, Shadow::GameO
 	camera->GetWidthAndHeight(width, height);
 	glm::vec2 cameraPosition = camera->GetPosition();
 	glm::vec2 position = glm::vec2(floor(playerPosition.x + 32 + width * 0.5f), floor(playerPosition.y - 16 + height * 0.5f)) - cameraPosition;
-	m_popupId = Shadow::FontManager::Instance()->CreateFont("Assets/Fonts/Louis George Cafe Bold.ttf", 18, "Press 'E' to purchase ammo [Cost: " + std::to_string(AMMO_COST) + "]", Color(Black), position);
+	m_popupId = Shadow::FontManager::Instance()->CreateFont("Assets/Fonts/Louis George Cafe Bold.ttf", 18, "Press [E] to switch power on.", Color(Black), position);
 }
 
-void AmmoTrigger::OnTriggerStay(Shadow::GameObject* thisCollider, Shadow::GameObject* otherCollider)
+void PowerTrigger::OnTriggerStay(Shadow::GameObject* thisCollider, Shadow::GameObject* otherCollider)
 {
 	if (otherCollider->GetName() != "Player")
 		return;
@@ -59,10 +61,10 @@ void AmmoTrigger::OnTriggerStay(Shadow::GameObject* thisCollider, Shadow::GameOb
 	}
 
 	if (Shadow::InputManager::Instance()->IsKeyDown(Shadow::KEYCODE_e))
-		BuyAmmo();
+		TurnPowerOn();
 }
 
-void AmmoTrigger::OnTriggerExit()
+void PowerTrigger::OnTriggerExit()
 {
 	if (m_popupId != -1)
 		Shadow::FontManager::Instance()->DeleteFont(m_popupId);
@@ -70,14 +72,11 @@ void AmmoTrigger::OnTriggerExit()
 	m_popupId = -1;
 }
 
-void AmmoTrigger::BuyAmmo()
+void PowerTrigger::TurnPowerOn()
 {
-	if (Ammo::Instance()->IsMaxAmmo())
-		return;
+	GameManager::Instance()->TurnPowerOn();
 
-	if (!GameManager::Instance()->PlayerPurchase(AMMO_COST))
-		return;
+	LevelManager::Instance()->DeletePowerTriggers();
 
-	Ammo::Instance()->MaxAmmo();
-	Hud::Instance()->UpdateAmmo();
+	Shadow::DLOG("Power turned on.");
 }

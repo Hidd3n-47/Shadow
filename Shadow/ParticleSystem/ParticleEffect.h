@@ -14,6 +14,8 @@ public:
 	bool Update();
 	void Render();
 
+	// Accessor.
+	inline short GetNumParticles() const { return m_numParticles; }
 private:
 	Scene* m_pScene = nullptr;
 
@@ -22,6 +24,7 @@ private:
 	glm::vec2 m_position;
 	float m_maxLifeSpan;
 	float m_lifeTime;
+	short m_numParticles;
 
 	std::vector<Particle*> m_particles;
 };

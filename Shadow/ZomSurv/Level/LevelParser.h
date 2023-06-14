@@ -41,6 +41,7 @@ private:
 
 	// Texture id's
 	static int m_wallId;
+	static int m_powerWallId;
 	static int m_spawnerId;
 	static int m_quickRevId;
 	static int m_doubleTapId;

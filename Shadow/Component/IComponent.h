@@ -18,7 +18,8 @@ enum class ComponentType
 	BoxCollider2D,
 	CircleCollider2D,
 	RigidBody2D,
-	Physics2D
+	Physics2D,
+	Animation
 };
 
 /***
