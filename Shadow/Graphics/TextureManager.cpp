@@ -16,9 +16,6 @@ TextureManager::~TextureManager()
 
 uint16_t TextureManager::Load(std::string filePath, SDL_Renderer* pRenderer, int width, int height)
 {
-	if (width != TILE_WIDTH || height != TILE_WIDTH)
-		Log::Instance()->Warning("Texture is not 32 x 32 in size.\nFile Path: " + filePath);
-
 	SDL_Surface* surface = IMG_Load(filePath.c_str());
 	if (surface == nullptr)
 		Log::Instance()->CriticalError("Failed to load image at path: " + filePath + "\nSDL Err: " + (std::string)SDL_GetError(),

@@ -42,6 +42,7 @@ public:
 	inline void PurchaseJug() { m_pPlayingState->PurchaseJug(); }
 	inline void PurchaseSpeedCola() { m_speedCola = true; }
 	inline float GetReloadMultiplier() { if (m_speedCola) return 2.0f; else return 1.0f; }
+	inline void ResetPerkStats() { m_speedCola = false; m_quickRevive = false; }
 
 	// Inline Sound effects.
 	inline void PlayMaxAmmoSound()		{ Shadow::Audio::Instance()->PlaySound(m_maxAmmoAudio); }

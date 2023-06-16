@@ -28,9 +28,7 @@ void WaveDisplayState::Update()
 {
 	float dt = Shadow::Time::Instance()->GetDeltaTime();
 
-	//Shadow::FontManager::Instance()->TranslateFont(m_fontId, glm::vec2{ 0.0f, 2 * sin(m_timer * TIME_TO_DISPLAY * SPEED) });
 	Shadow::FontManager::Instance()->UpdateFont(m_fontId, glm::vec2{ m_x,  m_y + 200 * glm::sin(m_timer / 2.5 * PI) });
-
 
 	m_timer += dt;
 	if (m_timer <= TIME_TO_DISPLAY)

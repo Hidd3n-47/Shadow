@@ -122,6 +122,14 @@ void Hud::UpdateHealthBar(float health, float maxHealth)
 	m_pHealthSpriteRenderer->SetDimensions({ width, HEALTH_BAR_DIMENTIONS.y });
 }
 
+void Hud::ResetPerks()
+{
+	SetQuickReviveActive(false);
+	SetDoubleTapActive(false);
+	SetSpeedColaActive(false);
+	SetJugActive(false);
+}
+
 void Hud::DisplayReloadingUpdate(uint16_t fontId, bool display, const glm::vec2& offset)
 {
 	if (!display)

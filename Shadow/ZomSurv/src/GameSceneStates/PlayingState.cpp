@@ -40,12 +40,12 @@ void PlayingState::Update()
 
 	BulletManager::Instance()->Update();
 
-
 	UpdateZombies();
 
 	GameStateManager::Instance()->Update();
 
 	PickUpManager::Instance()->Update();
+
 	GunManager::Instance()->Update();
 
 	AfterUpdate();
@@ -75,7 +75,14 @@ void PlayingState::AddZombieToHitCooldown(Shadow::GameObject* pZombie)
 			return;
 
 	if (!m_pPlayer->Damage(50))
-		GameManager::Instance()->ChangeSceneState(GameSceneState::DEAD);
+		if (Hud::Instance()->GetQuickReviveActive())
+		{
+			m_pPlayer->ResetPerkStats();
+			GameManager::Instance()->ResetPerkStats();
+			Hud::Instance()->ResetPerks();
+		}
+		else
+			GameManager::Instance()->ChangeSceneState(GameSceneState::DEAD);
 
 	m_zombieHitCooldownList.emplace_back(pZombie);
 }

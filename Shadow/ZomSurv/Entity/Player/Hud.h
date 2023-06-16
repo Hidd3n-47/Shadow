@@ -15,6 +15,8 @@ public:
 	void UpdateAmmo();
 	void UpdateHealthBar(float health, float maxHealth);
 
+	void ResetPerks();
+
 	inline void DisplayReloadPrompt(bool display = false) { DisplayReloadingUpdate(m_reloadPrompt, display, m_reloadPromptDimentions); }
 	inline void DisplayReloading(bool display = false) { DisplayReloadingUpdate(m_reloading, display, m_reloadingDimentions); }
 
@@ -24,6 +26,8 @@ public:
 	inline void SetDoubleTapActive(bool active) { m_pDoubleTap->SetIsActive(active); }
 	inline void SetSpeedColaActive(bool active) { m_pSpeedCola->SetIsActive(active); }
 	inline void SetJugActive(bool active) { m_pJug->SetIsActive(active); }
+
+	inline bool GetQuickReviveActive() const { return m_pQuickRevive->GetIsActive(); }
 private:
 	Hud();
 	~Hud() { }

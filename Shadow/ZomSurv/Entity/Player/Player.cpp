@@ -41,8 +41,7 @@ Player::Player(Shadow::Scene* pScene, const glm::vec3& startingPosition) :
 
 Player::~Player()
 {
-	delete m_pGun[0];
-	delete m_pGun[1];
+	delete m_pGun;
 
 	m_pScene->RemoveGameObject(m_gameObject);
 }
@@ -70,6 +69,13 @@ void Player::Update(const glm::vec3& moveDirection)
 
 bool Player::Damage(uint16_t damage)
 {
+	if (m_indestructable)
+	{
+		m_indestructableTimer -= Shadow::Time::Instance()->GetDeltaTime();
+		if (m_indestructableTimer <= 0.f)
+			m_indestructable = false;
+	}
+
 	m_healthRegenTimer = HEALTH_REGEN_DELAY;
 
 	if (m_health <= damage)
@@ -92,17 +98,27 @@ bool Player::PurchaseItem(unsigned int cost)
 
 void Player::Shoot()
 {
-	if (m_pGun[m_gunIndex]->GetNumInClip() == 0)
+	if (m_pGun->GetNumInClip() == 0)
 	{
 		m_state = PlayerState::RELOADING;
-		m_pGun[m_gunIndex]->Reload();
+		m_pGun->Reload();
 	}
 	else
 	{
-		m_pGun[m_gunIndex]->Shoot();
-		if (m_pGun[m_gunIndex]->GetNumInClip() == 0 && m_state == PlayerState::PLAYING)
+		m_pGun->Shoot();
+		if (m_pGun->GetNumInClip() == 0 && m_state == PlayerState::PLAYING)
 			Hud::Instance()->DisplayReloadPrompt(true);
 	}
+}
+
+void Player::ResetPerkStats()
+{
+	m_maxHealth = 150.0f; 
+	m_speed = 200.0f;
+	m_health = m_maxHealth; 
+	m_indestructable = true;
+
+	Hud::Instance()->UpdateHealthBar(m_health, m_maxHealth);
 }
 
 void Player::CreateGameObject(Shadow::Scene* pScene)
@@ -175,7 +191,7 @@ void Player::UpdateRegenTimer(float dt)
 
 void Player::ReloadUpdate()
 {
-	if (!m_pGun[m_gunIndex]->Reload())
+	if (!m_pGun->Reload())
 		return;
 
 	m_state = PlayerState::PLAYING;
