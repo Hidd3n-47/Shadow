@@ -48,7 +48,6 @@ private:
 
 	bool m_isActive = true;
 	
-	//std::list<IComponent*> m_components;
 	std::vector<IComponent*> m_components;
 
 	void Update();

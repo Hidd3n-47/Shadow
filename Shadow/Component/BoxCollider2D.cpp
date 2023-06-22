@@ -67,11 +67,7 @@ void BoxCollider2D::OnComponentAdd()
 
 void BoxCollider2D::Update()
 {
-	/*if (m_lastFramePosition == m_pOwner->GetTransform()->position)
-		return;
-
-	CollisionHandler::Instance()->AddBoxToDynamicQueue(m_pOwner);
-	m_lastFramePosition = m_pOwner->GetTransform()->position;*/
+	// Empty.
 }
 
 void BoxCollider2D::PhysicsUpdate()
@@ -131,18 +127,7 @@ void BoxCollider2D::OnCollisionEnter(Shadow::GameObject* thisGameObject, Shadow:
 
 	if (!m_collisionEntered)
 		m_pCollisionMethods->OnCollisionEnter(thisGameObject, otherGameObject);
-	/*else
-		OnCollisionStay(otherGameObject);*/
-
-	//// TODO: Due to not having OnCollisionExit() the OnCollisionEnter() will only be called the first collision.
-	//m_collisionEntered = true;
 }
-
-//void BoxCollider2D::OnCollisionStay(Shadow::GameObject* otherGameObject)
-//{
-//	if (m_pCollisionMethods != nullptr)
-//		m_pCollisionMethods->OnCollisionStay(otherGameObject);
-//}
 
 void BoxCollider2D::OnComponentRemove()
 {

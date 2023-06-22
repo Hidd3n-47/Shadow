@@ -13,6 +13,10 @@ public:
 
 private:
 	Shadow::Scene* m_pScene = nullptr;
-	uint16_t m_fontId = 0;
+	Shadow::GameObject* m_pBg = nullptr;
+
+	Uint16 m_musicId = 0;
+
+	void InitBackground();
 };
 

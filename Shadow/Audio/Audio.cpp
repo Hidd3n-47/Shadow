@@ -20,6 +20,12 @@ void Audio::Init()
 
 void Audio::Destroy()
 {
+	for (auto it = m_music.begin(); it != m_music.end(); ++it)
+		Mix_FreeMusic(it->second);
+
+	for (auto it = m_sounds.begin(); it != m_sounds.end(); ++it)
+		Mix_FreeChunk(it->second);
+
 	Mix_Quit();
 
 	delete m_pInstance;
@@ -50,7 +56,7 @@ Uint16 Audio::LoadMusic(const std::string& filePath)
 	if (m_music[m_musicId] == nullptr)
 		Log::Instance()->FatalError("Failed to load Mp3 file at: " + filePath, ERR_CODE::CANNOT_CREATE_MUSIC, true);
 
-	return m_soundId++;
+	return m_musicId++;
 }
 
 Uint16 Audio::LoadMusic(const std::string& filePath, int volume)
@@ -86,6 +92,8 @@ void Audio::DestroySound(Uint16 soundId)
 void Audio::DestroyMusic(Uint16 musicId)
 {
 	Mix_FreeMusic(m_music[musicId]);
+
+	m_music.erase(musicId);
 }
 
 SHADOW_NAMESPACE_END

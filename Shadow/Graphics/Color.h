@@ -1,6 +1,12 @@
 #include "src/sdpch.h"
 #pragma once
 
+/***
+=========================================================================================
+BASIC_COLORS:
+	A enum to represent the basic and common colors.
+=========================================================================================
+*/
 enum BasicColors
 {
 	Black,
@@ -15,6 +21,12 @@ enum BasicColors
 	Brown
 };
 
+/***
+=========================================================================================
+COLOR:
+	A structure that holds information for the color.
+=========================================================================================
+*/
 struct Color
 {
 	Color(uint8_t r, uint8_t g, uint8_t b, uint8_t a) : r(r), g(g), b(b), a(a) { }

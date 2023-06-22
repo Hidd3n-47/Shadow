@@ -2,6 +2,14 @@
 
 SHADOW_NAMESPACE_BEGIN
 
+/***
+=========================================================================================
+BUTTON:
+	A class that creates a button like object and addes it to the scene.
+	A button has an idle state, hover state and Update returns true if the button is
+	pressed.
+=========================================================================================
+*/
 class Button
 {
 public:

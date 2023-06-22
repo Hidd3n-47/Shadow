@@ -78,6 +78,7 @@ void AmmoTrigger::BuyAmmo()
 	if (!GameManager::Instance()->PlayerPurchase(AMMO_COST))
 		return;
 
+	GameManager::Instance()->PlayPurchasSound();
 	Ammo::Instance()->MaxAmmo();
 	Hud::Instance()->UpdateAmmo();
 }

@@ -5,17 +5,21 @@
 
 SHADOW_NAMESPACE_BEGIN
 
+/***
+=========================================================================================
+RANDOM:
+	A small static class to generate random numbers. Can generate a random int or 
+	an integer between two numbers (lower inclusive and upper exlusive).
+=========================================================================================
+*/
 class Random
 {
 public:
-	//inline static Random* Instance() { return m_pInstance == nullptr ? m_pInstance = new Random() : m_pInstance; }
-
 	static int GetRandomIntBetween(int lowerBound, int upperBound);
 
 	inline static int GetRandomInt() { return (*m_randomEngine)(); }
 
 private:
-	/*Random();*/
 	~Random();
 
 	static std::mt19937* m_randomEngine ;

@@ -4,6 +4,12 @@
 
 SHADOW_NAMESPACE_BEGIN
 
+/***
+=========================================================================================
+FONT:
+	A class to hold information relating to a font.
+=========================================================================================
+*/
 struct Font
 {
 	Font() { }
@@ -21,6 +27,13 @@ struct Font
 	Color color = Color(Black);
 };
 
+/***
+=========================================================================================
+FONT_MANAGER:
+	Font manager is a singleton that deals with the loading, updating, rendering and
+	destroying of the fonts.
+=========================================================================================
+*/
 class FontManager
 {
 public:

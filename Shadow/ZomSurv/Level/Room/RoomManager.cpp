@@ -51,6 +51,8 @@ void RoomManager::BuyRoom(int roomId, int nextRoomId)
 		return;
 	}
 
+	GameManager::Instance()->PlayPurchasSound();
+
 	// Delete the doors.
 	delete m_doors[roomId];
 	m_doors.erase(roomId);

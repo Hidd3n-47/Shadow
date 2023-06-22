@@ -1,7 +1,6 @@
 #include "sdpch.h"
 #include "GameObject.h"
 
-#include "GameObjectManager.h"
 #include "Component/SpriteRenderer.h"
 
 SHADOW_NAMESPACE_BEGIN

@@ -4,6 +4,13 @@
 
 SHADOW_NAMESPACE_BEGIN
 
+/***
+=========================================================================================
+PARTICLE_MANAGER:
+	Particle manager is a singleton used to create particle effects, update, load and
+	destroy particles from the desired effect.
+=========================================================================================
+*/
 class ParticleManager
 {
 public:

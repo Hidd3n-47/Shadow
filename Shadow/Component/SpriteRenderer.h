@@ -6,6 +6,15 @@ SHADOW_NAMESPACE_BEGIN
 
 class GameObject;
 
+/***
+=========================================================================================
+SPRITE_RENDERER_COMPONENT:
+	A component that can be attached to a GameObject.
+	This component is responsible for rendering something to the screen.
+	The texture is either cashed and passed in using its unique id, or can be created
+	and loaded from a file path.
+=========================================================================================
+*/
 class SpriteRenderer : public IComponent
 {
 public:

@@ -53,11 +53,13 @@ void LevelManager::BuyPerk(int perkId)
 		return;
 	}
 
+	GameManager::Instance()->PlayPurchasSound();
+
 	switch (perkId)
 	{
 	case 100:
 		// Quick Revive.
-
+		GameManager::Instance()->ActivateQuickRevive();
 		break;
 	case 101:
 		// Speed Cola.

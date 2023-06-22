@@ -61,14 +61,12 @@
     <ClCompile Include="Collision\CollisionHandler.cpp" />
     <ClCompile Include="Engine\Engine.cpp" />
     <ClCompile Include="GameObject\GameObject.cpp" />
-    <ClCompile Include="GameObject\GameObjectManager.cpp" />
     <ClCompile Include="Input\InputManager.cpp" />
     <ClCompile Include="FileIO\IOManager.cpp" />
     <ClCompile Include="Logger\Log.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Component\SpriteRenderer.cpp" />
     <ClCompile Include="Component\RigidBody2D.cpp" />
-    <ClCompile Include="Camera\OrthographicCamera.cpp" />
     <ClCompile Include="Scene\Scene.cpp" />
     <ClCompile Include="Scene\SceneManager.cpp" />
     <ClCompile Include="src\sdpch.cpp">
@@ -137,14 +135,12 @@
     <ClInclude Include="Collision\CollisionHandler.h" />
     <ClInclude Include="Component\IComponent.h" />
     <ClInclude Include="Engine\Engine.h" />
-    <ClInclude Include="GameObject\GameObjectManager.h" />
     <ClInclude Include="GameObject\GameObject.h" />
     <ClInclude Include="Input\InputManager.h" />
     <ClInclude Include="FileIO\IOManager.h" />
     <ClInclude Include="Logger\Log.h" />
     <ClInclude Include="Component\SpriteRenderer.h" />
     <ClInclude Include="Component\RigidBody2D.h" />
-    <ClInclude Include="Camera\OrthographicCamera.h" />
     <ClInclude Include="Scene\Scene.h" />
     <ClInclude Include="Scene\SceneManager.h" />
     <ClInclude Include="src\sdpch.h" />
@@ -158,9 +154,6 @@
     <ClInclude Include="ZomSurv\Weapons\Bullet\BulletManager.h" />
     <ClInclude Include="ZomSurv\Weapons\Gun.h" />
     <ClInclude Include="ZomSurv\Weapons\GunManager.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="Ideas.txt" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

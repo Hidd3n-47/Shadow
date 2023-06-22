@@ -31,6 +31,9 @@ public:
 
 	void ChangeSceneState(GameSceneState state);
 
+	void PlayStartingRoundAudio();
+	void TurnPowerOn();
+
 	inline bool PlayerPurchase(unsigned int cost) { return m_pPlayingState->PlayerPurchase(cost); }
 
 	inline void AddZombieToHitCooldown(Shadow::GameObject* pZombie) { m_pPlayingState->AddZombieToHitCooldown(pZombie); }
@@ -49,6 +52,7 @@ public:
 	inline void PlayNukeSound()			{ Shadow::Audio::Instance()->PlaySound(m_nukeAudio); }
 	inline void PlayInstaKillSound()	{ Shadow::Audio::Instance()->PlaySound(m_instaKillAudio); }
 	inline void PlayDoublePointsSound() { Shadow::Audio::Instance()->PlaySound(m_doublePointsAudio); }
+	inline void PlayPurchasSound()		{ Shadow::Audio::Instance()->PlaySound(m_purchasAudio); }
 
 	// Accessors.
 	inline uint8_t GetWave() const { return m_wave; }
@@ -57,7 +61,6 @@ public:
 	inline glm::vec3 GetPlayerPosition() const { return m_pPlayingState->GetPlayerPosition(); }
 	inline float GetPlayerRotation() const { return m_pPlayingState->GetPlayerRotation(); }
 	inline Shadow::Scene* GetGameScene() const { return m_pGameScene; }
-	inline Uint16 GetMusicId() const { return m_musicId; }
 	inline bool GetPowerOn() const { return m_powerOn; }
 	inline bool GetQuickRevive() const { return m_quickRevive; }
 
@@ -65,7 +68,6 @@ public:
 	inline void SetPlayerStartingPos(const glm::vec2& position) { m_pPlayingState->SetPlayerStartingPos(glm::vec3(position.x, position.y, 0.0f)); }
 	inline void AddPlayerScore(unsigned int score) { m_pPlayingState->AddPlayerScore(m_scoreMultiplier * score); }
 	inline void ActivateQuickRevive() { m_quickRevive = true; }
-	inline void TurnPowerOn() { m_powerOn = true; }
 private:
 	GameManager();
 	~GameManager();
@@ -93,12 +95,13 @@ private:
 	bool m_speedCola = false;
 	bool m_quickRevive = false;
 
-	Uint16 m_musicId = 0;
-
 	// Audio ID's.
+	uint16_t m_startingRoundAudio = 0;
 	uint16_t m_maxAmmoAudio = 0;
 	uint16_t m_nukeAudio = 0;
 	uint16_t m_instaKillAudio = 0;
 	uint16_t m_doublePointsAudio = 0;
+	uint16_t m_powerAudio = 0;
+	uint16_t m_purchasAudio = 0;
 };
 

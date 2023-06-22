@@ -6,6 +6,17 @@
 
 SHADOW_NAMESPACE_BEGIN
 
+/***
+=========================================================================================
+CIRCLE_COLLIDER2D_COMPONENT:
+	A component that can be attached to a GameObject.
+	This component is responsible for creating a circle shape that will have collision.
+	Circle collisions are not abstract, i.e. no circle triggers.
+
+	For custom collision methods (events that occure when there is a collision is
+	triggered, then can create a pointer to the collision methods.
+=========================================================================================
+*/
 class CircleCollider2D : public IComponent
 {
 public:
@@ -22,7 +33,6 @@ public:
 	virtual void OnComponentRemove() override;
 
 	void OnCollisionEnter(Shadow::GameObject* thisGameObject, Shadow::GameObject* otherGameObject);
-	//void OnCollisionStay(Shadow::GameObject* thisGameObject, Shadow::GameObject* otherGameObject);
 
 	// Accessors.
 	inline float GetRadius() const { return m_radius; }

@@ -5,7 +5,6 @@
 #include "Window/WindowManager.h"
 #include "Scene/SceneManager.h"
 #include "Graphics/FontManager.h"
-#include "GameObject/GameObjectManager.h"
 #include "Collision/CollisionHandler.h"
 #include "Time/Time.h"
 #include "Graphics/TextureManager.h"
@@ -20,7 +19,6 @@ Engine* Engine::m_pInstance = nullptr;
 
 void Engine::InitEngine()
 {
-	// TODO need to implement where the engine load textures that are used for the engine, example, debugging textures such as arrows for rigid body as well as the "No texture" texture.
 	if (SDL_Init(SDL_INIT_EVERYTHING) != 0)
 		Log::Instance()->FatalError("Failed to initialize SDL.\nSDL_Error: ", ERR_CODE::SDL_FAILED_TO_INIT, true);
 
@@ -50,13 +48,11 @@ void Engine::Run()
 	while (m_running)
 	{
 		Time::Instance()->Tick();
-		//Time::Instance()->StartTick();
+
 		InputManager::Instance()->Listen();
 		Update();
 		PhysicsUpdate();
 		Render();
-		//Time::Instance()->EndTick();
-
 	}
 }
 
@@ -80,8 +76,6 @@ void Engine::DestroyEngine()
 	IMG_Quit();
 
 	SDL_Quit();
-
-	//system("PAUSE");
 
 	// Delete the instance of the engine. THIS MUST BE THE LAST THING DESTROYED.
 	delete m_pInstance;

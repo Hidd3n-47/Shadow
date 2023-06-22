@@ -18,7 +18,7 @@ Player::Player(Shadow::Scene* pScene, const glm::vec3& startingPosition) :
 	m_damage = 10;
 	m_position = nullptr;
 	m_speed = 200.0f;
-	m_score = 23500;
+	m_score = 500;
 
 	CreateGameObject(pScene);
 	

@@ -3,7 +3,7 @@
 
 SHADOW_NAMESPACE_BEGIN
 
-Camera::Camera(glm::vec3 position, float width, float height) :
+Camera::Camera(const glm::vec3& position, float width, float height) :
 	m_position(position),
 	m_width(width),
 	m_height(height)

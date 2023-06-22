@@ -4,6 +4,16 @@
 
 SHADOW_NAMESPACE_BEGIN
 
+/***
+=========================================================================================
+ANIMATION_COMPONENT:
+	A component that can be attached to a GameObject. 
+	This component is responsible for loading in a sprite sheet and playing the
+	animation during run time.
+
+	The animcation can be paused and reset (to the first index).
+=========================================================================================
+*/
 class Animation : public IComponent
 {
 public:

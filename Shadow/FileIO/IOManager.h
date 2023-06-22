@@ -8,6 +8,12 @@
 
 SHADOW_NAMESPACE_BEGIN
 
+/***
+=========================================================================================
+IO_MANAGER:
+	IO Manager is a singleton used to load in string's from a file.
+=========================================================================================
+*/
 class IOManager
 {
 public:

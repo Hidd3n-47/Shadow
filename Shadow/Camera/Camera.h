@@ -4,10 +4,16 @@
 
 SHADOW_NAMESPACE_BEGIN
 
+/***
+=========================================================================================
+CAMERA:
+	The camera object of the game engine.
+=========================================================================================
+*/
 class Camera
 {
 public:
-	Camera(glm::vec3 position, float width, float height);
+	Camera(const glm::vec3& position, float width, float height);
 	~Camera();
 
 	void Update();

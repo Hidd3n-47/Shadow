@@ -7,6 +7,19 @@
 
 SHADOW_NAMESPACE_BEGIN
 
+/***
+=========================================================================================
+BOX_COLLIDER2D_COMPONENT:
+	A component that can be attached to a GameObject. 
+	This component is responsible for creating a boxed shape that will have collision.
+	Collision can either be abstract (such as triggers) or simulations such as 
+	collision between other GameObjects with a Collision Component.
+
+	For custom trigger or collision methods (events that occure when there is a 
+	collision or a trigger is triggered, then can create a pointer to the collision or
+	trigger methods.
+=========================================================================================
+*/
 class BoxCollider2D : public IComponent
 {
 public:
@@ -25,12 +38,10 @@ public:
 
 	void Trigger(GameObject* thisCollider, GameObject* otherCollider);
 
-	// Collision Methods.
 	void OnTriggerEnter(GameObject* thisCollider, GameObject* otherCollider);
 	void OnTriggerStay(GameObject* thisCollider, GameObject* otherCollider);
 	void OnTriggerExit();
 	void OnCollisionEnter(Shadow::GameObject* thisGameObject, Shadow::GameObject* otherGameObject);
-	//void OnCollisionStay(Shadow::GameObject* otherGameObject);
 
 	virtual void OnComponentRemove() override;
 

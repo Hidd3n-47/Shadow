@@ -46,10 +46,7 @@ void CircleCollider2D::OnComponentAdd()
 
 void CircleCollider2D::Update()
 {
-	/*if (m_lastFramePosition == m_pOwner->GetTransform()->position)
-		return;
-
-	CollisionHandler::Instance()->AddCircleToDynamicQueue(m_pOwner);*/
+	// Empty.
 }
 
 void CircleCollider2D::PhysicsUpdate()
@@ -84,17 +81,6 @@ void CircleCollider2D::OnCollisionEnter(Shadow::GameObject* thisGameObject, Shad
 
 	if (!m_collisionEntered)
 		m_pCollisionMethods->OnCollisionEnter(thisGameObject, otherGameObject);
-	/*else
-		OnCollisionStay(otherGameObject);*/
-
-	//// TODO: Due to not having OnCollisionExit() the OnCollisionEnter() will only be called the first collision.
-	//m_collisionEntered = true;
 }
-
-//void CircleCollider2D::OnCollisionStay(Shadow::GameObject* otherGameObject)
-//{
-//	if (m_pCollisionMethods != nullptr)
-//		m_pCollisionMethods->OnCollisionStay(otherGameObject);
-//}
 
 SHADOW_NAMESPACE_END

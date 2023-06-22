@@ -1,9 +1,0 @@
-Ideas:
-
-Letf to do:
-	- Try add zombie sounds
-	- Zombie and player rotation and animation
-	- (Addition) could try add zombie limbs that stay for a bit after zombie dies or takes damage
-	- Potentailly better graphics on the start and death screen
-	- Better perk art 
-	- Pack a punch?

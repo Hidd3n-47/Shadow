@@ -17,36 +17,32 @@ private:
 
 	static LevelParser* m_pInstance;
 
-	static void ProcessLevelWalls(LevelData* pLevelData, const std::string& filePath, Shadow::Scene* pScene);
-	static void TileHandler(LevelData* pLevelData, int tileID, int x, int y, Shadow::Scene* pScene);
+	void ProcessLevelWalls(LevelData* pLevelData, const std::string& filePath, Shadow::Scene* pScene);
+	void TileHandler(LevelData* pLevelData, int tileID, int x, int y, Shadow::Scene* pScene);
 
-	static void ProcessLevelDoors(LevelData* pLevelData, const std::string& filePath, Shadow::Scene* pScene);
-	static void DoorIdHandler(int value, int x, int y, Shadow::Scene* pScene);
+	void ProcessLevelDoors(LevelData* pLevelData, const std::string& filePath, Shadow::Scene* pScene);
+	void DoorIdHandler(int value, int x, int y, Shadow::Scene* pScene);
 
-	static void ProcessEnvironment(LevelData* pLevelData, const std::string& filePath, Shadow::Scene* pScene);
-	static void EnvironmentHandler(LevelData* pLevelData, int value, int x, int y, Shadow::Scene* pScene);
-	static std::string PerkMachineFilePath(int key, int*& pTextureId);
+	void ProcessEnvironment(LevelData* pLevelData, const std::string& filePath, Shadow::Scene* pScene);
+	void EnvironmentHandler(LevelData* pLevelData, int value, int x, int y, Shadow::Scene* pScene);
+	std::string PerkMachineFilePath(int key, int*& pTextureId);
 
-	static void CreateSolidWallGameObject(const std::string& gameObjectName, const std::string& filePath, const glm::vec2& position, Shadow::Scene* pScene, int& textureId);
-	static void CreateFloorGameObject(const std::string& gameObjectName, const std::string& filePath, const glm::vec2& position, Shadow::Scene* pScene);
+	void CreateSolidWallGameObject(const std::string& gameObjectName, const std::string& filePath, const glm::vec2& position, Shadow::Scene* pScene, int& textureId);
+	void CreateFloorGameObject(const std::string& gameObjectName, const std::string& filePath, const glm::vec2& position, Shadow::Scene* pScene, int& textureId);
 
-	static void LoadNavMesh(LevelData* pLevelData, const std::string& filePath);
+	void LoadNavMesh(LevelData* pLevelData, const std::string& filePath);
 
-	static void LoadFromTextFile(std::vector<std::string>& levelFile, const std::string& filePath);
-
-	/*template<typename Arg1, typename... Args>
-	static void ProcessTextFromFile(std::vector<std::string>& levelFile, void* function(Arg1, Args&&... Args));
-
-	static void Test(int x, int y, int z);*/
+	void LoadFromTextFile(std::vector<std::string>& levelFile, const std::string& filePath);
 
 	// Texture id's
-	static int m_wallId;
-	static int m_powerWallId;
-	static int m_spawnerId;
-	static int m_quickRevId;
-	static int m_doubleTapId;
-	static int m_speedColaId;
-	static int m_jugId;
-	static int m_ammoId;
+	int m_wallId		= -1;
+	int m_darkWallId	= -1;
+	int m_powerWallId	= -1;
+	int m_spawnerId		= -1;
+	int m_quickRevId	= -1;
+	int m_doubleTapId	= -1;
+	int m_speedColaId	= -1;
+	int m_jugId			= -1;
+	int m_ammoId		= -1;
 };
 

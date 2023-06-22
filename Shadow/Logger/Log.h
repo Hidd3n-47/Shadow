@@ -24,10 +24,8 @@ enum class ERR_CODE {
 
 /***
 =========================================================================================
-TEXTURE_MANAGER:
-	TextureManager handles the loading and caching of textures.
-
-	Use Destroy method to manually destroy the instance of the singleton.
+LOG:
+	A singleton that is responsible for logging messages to the sub-console.
 =========================================================================================
 */
 class Log

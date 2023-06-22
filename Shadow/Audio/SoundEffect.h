@@ -5,17 +5,24 @@
 
 SHADOW_NAMESPACE_BEGIN
 
+/***
+=========================================================================================
+SOUND_EFFECT:
+	Class representing a sound effect. Loads a sound effect from file path and handles
+	volume, loading and destruction.
+=========================================================================================
+*/
 class SoundEffect
 {
 public:
-	SoundEffect(const std::string& filePath) { m_soundId = Audio::Instance()->LoadSound(filePath);  }
+	SoundEffect(const std::string& filePath) { m_soundId = Audio::Instance()->LoadSound(filePath); }
 	SoundEffect(const std::string& filePath, int volume) : m_volume(volume) { m_soundId = Audio::Instance()->LoadSound(filePath, volume); }
 
 	~SoundEffect() { Audio::Instance()->DestroySound(m_soundId); }
 
-	void Play() { Audio::Instance()->PlaySound(m_soundId); }
+	inline void Play() { Audio::Instance()->PlaySound(m_soundId); }
 
-	// Accessor.
+	// Accessors.
 	inline int GetVolume() const { return m_volume; }
 
 	// Mutators.

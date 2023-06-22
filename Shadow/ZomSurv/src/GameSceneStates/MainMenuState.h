@@ -15,9 +15,13 @@ public:
 	virtual void OnStateExit() override;
 private:
 	Shadow::Scene* m_pScene = nullptr;
+	Shadow::GameObject* m_pBg = nullptr;
 	std::unordered_map<short, Shadow::Button> m_buttons;
 
-	uint16_t m_bg;
+	Uint16 m_bgAudio = 0;
+
+	void InitButtons();
+	void InitBackground();
 
 	void ButtonPressed(short buttonId);
 	void PlayPressed();

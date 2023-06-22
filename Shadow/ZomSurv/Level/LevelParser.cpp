@@ -15,15 +15,6 @@
 
 LevelParser* LevelParser::m_pInstance = nullptr;
 
-int LevelParser::m_wallId		= -1;
-int LevelParser::m_powerWallId	= -1;
-int LevelParser::m_spawnerId	= -1;
-int LevelParser::m_quickRevId	= -1;
-int LevelParser::m_doubleTapId	= -1;
-int LevelParser::m_speedColaId	= -1;
-int LevelParser::m_jugId		= -1;
-int LevelParser::m_ammoId		= -1;
-
 LevelParser::~LevelParser()
 {
 	delete m_pInstance;
@@ -31,29 +22,13 @@ LevelParser::~LevelParser()
 
 void LevelParser::ParseLevel(LevelData* pLevelData, const std::string& filePath, Shadow::Scene* pScene)
 {
-	/*m_futures.push_back(std::async(std::launch::async, ProcessLevelWalls, pLevelData, filePath, pScene));
-	m_futures.push_back(std::async(std::launch::async, ProcessLevelDoors, pLevelData, filePath, pScene));
-	m_futures.push_back(std::async(std::launch::async, ProcessEnvironment, pLevelData, filePath, pScene));
-	m_futures.push_back(std::async(std::launch::async, LoadNavMesh, pLevelData, filePath));*/
-
-	//std::thread t1(ProcessLevelWalls, pLevelData, filePath, pScene);
 	ProcessLevelWalls(pLevelData, filePath, pScene);
 
-	//std::thread t2(ProcessLevelDoors, pLevelData, filePath, pScene);
 	ProcessLevelDoors(pLevelData, filePath, pScene);
 
-	//std::thread t3(ProcessEnvironment, pLevelData, filePath, pScene);
 	ProcessEnvironment(pLevelData, filePath, pScene);
 
-	// ProcessWallGuns();
-
-	//std::thread t4(LoadNavMesh, pLevelData, filePath);
-	LoadNavMesh(pLevelData, filePath);
-
-	/*t1.join();
-	t2.join();
-	t3.join();
-	t4.join();*/
+	//LoadNavMesh(pLevelData, filePath);
 }
 
 void LevelParser::ProcessLevelWalls(LevelData* pLevelData, const std::string& filePath, Shadow::Scene* pScene)
@@ -100,6 +75,12 @@ void LevelParser::TileHandler(LevelData* pLevelData, int tileID, int x, int y, S
 	{
 	case -5: // Air
 	case -1: // Floor
+		break;
+	case -10:
+		CreateFloorGameObject("DarkWalls", "Assets/Environment/darkWall.png", { x * TILE_WIDTH, y * TILE_WIDTH }, pScene, m_darkWallId);
+		break;
+	case -4: // In between walls
+		CreateSolidWallGameObject("DarkWalls", "Assets/Environment/darkWall.png", { x * TILE_WIDTH, y * TILE_WIDTH }, pScene, m_darkWallId);
 		break;
 	case -3:
 		CreateSolidWallGameObject("Power", "Assets/Environment/powerWall.png", { x * TILE_WIDTH, y * TILE_WIDTH }, pScene, m_powerWallId);
@@ -233,8 +214,7 @@ void LevelParser::EnvironmentHandler(LevelData* pLevelData, int value, int x, in
 		return;
 	}
 
-	// This is where the perk machine code must go.
-	int* textureId = nullptr;
+	int* textureId = nullptr; 
 	std::string filePath = PerkMachineFilePath(value, textureId);
 	CreateSolidWallGameObject("Perk Machine " + std::to_string(value), filePath, { x * TILE_WIDTH, y * TILE_WIDTH }, pScene, *textureId);
 }
@@ -288,10 +268,19 @@ void LevelParser::CreateSolidWallGameObject(const std::string& gameObjectName, c
 	go->GetTransform()->position = glm::vec3(position.x, position.y, 0.0f);
 }
 
-void LevelParser::CreateFloorGameObject(const std::string& gameObjectName, const std::string& filePath, const glm::vec2& position, Shadow::Scene* pScene)
+void LevelParser::CreateFloorGameObject(const std::string& gameObjectName, const std::string& filePath, const glm::vec2& position, Shadow::Scene* pScene, int& textureId)
 {
 	Shadow::GameObject* go = pScene->CreateEmptyGameObject(gameObjectName);
-	Shadow::SpriteRenderer* sr = new Shadow::SpriteRenderer(go, filePath);
+	Shadow::SpriteRenderer* sr = nullptr;
+
+	if (textureId == -1)
+	{
+		sr = new Shadow::SpriteRenderer(go, filePath);
+		textureId = sr->GetTextureId();
+	}
+	else
+		sr = new Shadow::SpriteRenderer(go, textureId);
+
 	go->AddComponent(sr);
 	go->GetTransform()->position = glm::vec3(position.x, position.y, 0.0f);
 }
@@ -353,43 +342,3 @@ void LevelParser::LoadFromTextFile(std::vector<std::string>& levelFile, const st
 
 	fin.close();
 }
-//
-//template<typename Arg1, typename... Args>
-//void LevelParser::ProcessTextFromFile(std::vector<std::string>& levelFile, void* function(Arg1, Args&&... Args))
-//{
-//	const int WIDTH = pLevelData->LEVEL_WIDTH;
-//	const int HEIGHT = pLevelData->LEVEL_HEIGHT;
-//
-//	int value;
-//	short startPos = 0;
-//	short pos;
-//	std::string strVal;
-//	for (int row = 0; row < HEIGHT; row++)
-//	{
-//		function(std::vector<int>());
-//		navMesh->m_navMesh.push_back(std::vector<int>());
-//
-//		startPos = 0;
-//		pos = levelFile[row].find(",");
-//		for (int col = 0; col < WIDTH - 1; col++)
-//		{
-//			strVal = levelFile[row].substr(startPos, pos - startPos);
-//
-//			value = atoi(strVal.c_str());
-//			function;
-//			navMesh->m_navMesh[row].push_back(value);
-//
-//			startPos = pos + 1;
-//			pos = levelFile[row].find(",", startPos);
-//		}
-//		strVal = levelFile[row].substr(startPos, levelFile[row].length() - startPos);
-//
-//		value = atoi(strVal.c_str());
-//		navMesh->m_navMesh[row].push_back(value);
-//	}
-//}
-//
-//void LevelParser::Test(int x, int y, int z)
-//{
-//
-//}

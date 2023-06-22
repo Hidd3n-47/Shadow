@@ -13,7 +13,7 @@ public:
 private:
 	uint8_t m_waveMaxZombies = 0;
 	uint8_t m_waveCurrentZombies = 0;
-	const float m_timeBewtweenZombieSpawns = 0.75f;
+	const float m_timeBewtweenZombieSpawns = 1.5f;
 	float m_timeUntilNextZombieSpawn = 0.0f;
 };
 

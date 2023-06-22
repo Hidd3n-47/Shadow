@@ -8,6 +8,12 @@ SHADOW_NAMESPACE_BEGIN
 
 class GameObject;
 
+/***
+=========================================================================================
+SCENE:
+	A scene is a a group of gameobjects and is linked to a camera and window.
+=========================================================================================
+*/
 class Scene
 {
 	friend class SceneManager;

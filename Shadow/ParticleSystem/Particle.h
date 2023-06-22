@@ -2,6 +2,13 @@
 
 SHADOW_NAMESPACE_BEGIN
 
+/***
+=========================================================================================
+PARTICLE:
+	An abstract representation of a particle in space.
+	Just a storage container for the details and states of the said particle.
+=========================================================================================
+*/
 class Particle
 {
 	friend class ParticleEffect;

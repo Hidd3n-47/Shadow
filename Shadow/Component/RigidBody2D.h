@@ -5,6 +5,16 @@
 
 SHADOW_NAMESPACE_BEGIN
 
+/***
+=========================================================================================
+RIGID_BODY2D_COMPONENT:
+	A component that can be attached to a GameObject.
+	This component is responsible for creating a game object that has a 2D rigid
+	body. This means that the object is affected by physics.
+
+	(A full force based system needs to be implemented).
+=========================================================================================
+*/
 class RigidBody2D : public IComponent
 {
 public:
@@ -19,7 +29,7 @@ public:
 	virtual void Update() override { }
 	virtual void PhysicsUpdate() override;
 
-	virtual void Render(glm::vec3 worldPosition) override { } // ADDITION could use this to render the directions in debug mode
+	virtual void Render(glm::vec3 worldPosition) override { } //< ADDITION could use this to render the directions in debug mode.
 
 	virtual void OnComponentRemove() override;
 
@@ -30,8 +40,8 @@ public:
 
 	// Accessors.
 	inline BodyType GetBodyType() { return m_type; }
-	/*inline glm::vec3 GetNetForce() { return m_netForce; }*/
-	//inline bool GetFixedRotation() { return m_fixedRotation; }
+	/*inline glm::vec3 GetNetForce() { return m_netForce; }
+	inline bool GetFixedRotation() { return m_fixedRotation; }*/
 private:
 	GameObject* m_pOwner = nullptr;
 	BodyType m_type = BodyType::Static;

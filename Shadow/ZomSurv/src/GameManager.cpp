@@ -37,8 +37,6 @@ void GameManager::InitGame(Shadow::Scene* pScene)
 	Shadow::Window* win = pScene->GetWindow();
 	Shadow::Camera* cam = pScene->GetCamera();
 
-	m_musicId = Shadow::Audio::Instance()->LoadMusic("Assets/Music/bgMusic.mp3", 50);
-
 	m_pMainMenuState = new MainMenuState(win, cam);
 	m_pLoadingState = new LoadingState(win, cam, pScene);
 	m_pPlayingState = new PlayingState(win, cam, pScene);
@@ -46,10 +44,13 @@ void GameManager::InitGame(Shadow::Scene* pScene)
 	m_pMainMenuState->OnStateEnter();
 	m_pCurrentState = m_pMainMenuState;
 
+	m_startingRoundAudio = Shadow::Audio::Instance()->LoadSound("Assets/Audio/roundStart.mp3", 50);
 	m_maxAmmoAudio = Shadow::Audio::Instance()->LoadSound("Assets/Pickups/maxAmmo.mp3", 20);
 	m_nukeAudio = Shadow::Audio::Instance()->LoadSound("Assets/Pickups/nuke.mp3", 20);
 	m_instaKillAudio = Shadow::Audio::Instance()->LoadSound("Assets/Pickups/instaKill.mp3", 20);
 	m_doublePointsAudio = Shadow::Audio::Instance()->LoadSound("Assets/Pickups/doublePoints.mp3", 20);
+	m_powerAudio = Shadow::Audio::Instance()->LoadSound("Assets/Audio/power.mp3", 75);
+	m_purchasAudio = Shadow::Audio::Instance()->LoadSound("Assets/Audio/purchas.mp3", 20);
 }
 
 void GameManager::Update()
@@ -59,6 +60,8 @@ void GameManager::Update()
 	// If the state is not the playing state, no need to update double points.
 	if (m_pCurrentState != m_pPlayingState)
 		return;
+
+	PlayStartingRoundAudio();
 
 	if (m_doublePointsTimer == DOUBLE_POINTS_TIMER_DEFAULT)
 		return;
@@ -107,4 +110,37 @@ void GameManager::ChangeSceneState(GameSceneState state)
 	}
 
 	m_pCurrentState->OnStateEnter();
+}
+
+void GameManager::PlayStartingRoundAudio()
+{
+	static bool played = false;
+	static bool deleted = false;
+	static float timer = 15.0f;
+
+	if (deleted)
+		return;
+
+	if (played)
+	{
+
+		timer -= Shadow::Time::Instance()->GetDeltaTime();
+		if (timer <= 0.0f)
+		{
+			Shadow::Audio::Instance()->DestroySound(m_startingRoundAudio);
+			deleted = true;
+		}
+
+		return;
+	}
+
+	Shadow::Audio::Instance()->PlaySound(m_startingRoundAudio);
+	played = true;
+}
+
+void GameManager::TurnPowerOn()
+{
+	m_powerOn = true;
+
+	Shadow::Audio::Instance()->PlaySound(m_powerAudio);
 }

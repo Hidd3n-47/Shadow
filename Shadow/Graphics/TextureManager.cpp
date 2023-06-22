@@ -39,8 +39,6 @@ void TextureManager::RenderSingle(Camera* pCamera, SDL_Renderer* pRenderer, uint
 	float width, height;
 	pCamera->GetWidthAndHeight(width, height);
 
-	// This needs to be fixed later.
-	//  Need to accomidate the length of the actual object. THis needs to be implemented when texure class. TODO
 	if (world.x < camPosition.x - width || world.x > camPosition.x + width || world.y > camPosition.y + height || world.y < camPosition.y - height)
 		return;
 

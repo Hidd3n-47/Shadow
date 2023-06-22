@@ -5,8 +5,8 @@
 
 struct LevelData
 {
-	static const int LEVEL_WIDTH = 70;
-	static const int LEVEL_HEIGHT = 60;
+	static const int LEVEL_WIDTH = 142;
+	static const int LEVEL_HEIGHT = 110;
 
 	std::map<int, std::vector<glm::vec2>> mapTiles;
 	std::unordered_map<int, std::vector<glm::vec2>> spawnPoints;

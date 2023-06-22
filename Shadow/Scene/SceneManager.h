@@ -4,6 +4,13 @@
 
 SHADOW_NAMESPACE_BEGIN
 
+/***
+=========================================================================================
+SCENE_MANAGER:
+	Scene manager is a singleton that deals with the creating, updating, rendering, 
+	and destroying of secenes.
+=========================================================================================
+*/
 class SceneManager
 {
 public:
