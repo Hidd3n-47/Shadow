@@ -110,6 +110,9 @@ void PerkMachineTrigger::PerkNameFromId(int perkId)
 
 void PerkMachineTrigger::BuyPerk()
 {
+	if (!LevelManager::Instance()->BuyPerk(m_perkId))
+		return;
+
 	switch (m_perkId)
 	{
 	case 100:
@@ -125,8 +128,6 @@ void PerkMachineTrigger::BuyPerk()
 		Hud::Instance()->SetJugActive(true);
 		break;
 	}
-
-	LevelManager::Instance()->BuyPerk(m_perkId);
 
 	Shadow::DLOG("Room with trigger of " + std::to_string(m_perkId) + " purchased");
 }

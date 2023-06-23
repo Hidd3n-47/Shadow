@@ -45,12 +45,12 @@ void LevelManager::UnloadMap()
 	m_mapLoaded = false;
 }
 
-void LevelManager::BuyPerk(int perkId)
+bool LevelManager::BuyPerk(int perkId)
 {
 	if (!GameManager::Instance()->PlayerPurchase(PERK_COST))
 	{
 		Shadow::DLOG("You cannot afford that perk!")
-		return;
+		return false;
 	}
 
 	GameManager::Instance()->PlayPurchasSound();
@@ -83,6 +83,8 @@ void LevelManager::BuyPerk(int perkId)
 		delete m_perkTriggers[perkId][i];
 
 	m_perkTriggers[perkId].clear();
+
+	return true;
 }
 
 void LevelManager::DeletePowerTriggers()
